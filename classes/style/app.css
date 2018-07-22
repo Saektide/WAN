@@ -1,0 +1,231 @@
+body {
+    margin: 0;
+    font-family: Rubik;
+    background: #031317;
+}
+
+body a {
+    text-decoration: none;
+    color: #10c8ea;
+}
+
+body a:hover {
+    filter: brightness(75%);
+}
+
+.navbar {
+    background: #03282f;
+    padding: 15px;
+    box-shadow: 0 0 7px rgba(0,0,0,.4);
+    color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.navbar button {
+    background: #1a94ab;
+    color: #fff;
+    border: 0;
+    padding: 7px 14px;
+    margin-left: 10px;
+    border-radius: 3px;
+    font-family: Rubik;
+    cursor: pointer;
+}
+
+.container {
+    position: relative;
+    top: 80px;
+    background: #0e3b46;
+    margin: 0 auto;
+    width: calc(100% - 245px);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.container h2 {
+    margin-top: 0;
+    font-weight: 100;
+}
+
+.warpmodal {
+    background: rgba(0,0,0,.3);
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .4s;
+    overflow: hidden;
+}
+
+.warpmodal.active {
+    height: 100%;
+}
+
+.warpmodal.hidden {
+    height: 0%;
+}
+
+.warpmodal .modal {
+    box-shadow: 0 3px 10px rgba(0,0,0,.34);
+    background: #eee;
+    padding: 20px 30px;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 20px;
+}
+
+.modal .body {
+    overflow: hidden;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.warpmodal .modal > h3 {
+    margin-top: 0;
+    margin: -20px -30px 15px -30px;
+    padding: 15px;
+    font-weight: 100;
+    border-bottom: 1px solid #ccc;
+    padding-right: 45px;
+}
+
+button#closemodal {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    border: 2px solid #ff6a6a;
+    color: transparent;
+    background: #f93939;
+    width: 16px;
+    height: 16px;
+    border-radius: 15px;
+    opacity: .8;
+}
+
+button#closemodal:hover {
+    opacity: 1;
+}
+
+.actionbuttons > button {
+    background: #1a94ab;
+    color: #fff;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    cursor: pointer;
+    transition: .4s;
+    font-family: Rubik;
+}
+
+.actionbuttons > button:hover {
+    background: #2abbd6;
+}
+
+.wikislist {
+    border-top: 1px solid #03282f;
+    margin-top: 10px;
+}
+
+.wikirc {
+    position: relative;
+    margin: 10px;
+    border: 1px solid #03282f;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.wikirc h2.wikidom {
+    background: #03282f;
+    padding: 10px 20px;
+}
+
+.wikirc .details {
+    margin: 10px 20px;
+}
+
+.wikirc button#removewiki {
+    position: absolute;
+    top: 15.5px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #ffa0a0;
+    background: #ff6565;
+    cursor: pointer;
+}
+
+.wikirc button#removewiki:hover {
+    filter: brightness(75%);
+}
+
+.wikirc > h3 {
+    background: #02191d;
+    color: #fff;
+    font-weight: 100;
+    padding: 6px 20px;
+    margin-top: -20px;
+    margin-bottom: 0;
+}
+
+h3.lastrc .lastuser {
+    float: right;
+    border-left: 1px solid #1a94ab;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+h3.lastrc span.lasttype {
+    float: right;
+    text-transform: uppercase;
+}
+
+ul.faq {
+    list-style: none;
+    padding: 0;
+}
+
+ul.faq .q {
+    padding: 7px 11px;
+    margin: 7px 0;
+    font-style: italic;
+    border-left: 2px solid #ffa500;
+}
+
+.unsupportscreensize {
+    position: fixed;
+    background: #10434c;
+    z-index: 100;
+    color: #fff;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 30px;
+    display: none;
+}
+
+/* For smaller devices */
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: auto;
+        border-radius: 0;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .unsupportscreensize {
+        display: block;
+    }
+}
