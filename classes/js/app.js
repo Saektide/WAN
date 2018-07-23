@@ -122,7 +122,7 @@ class Wiki {
                 )
             })
         })
-        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
 
     static add(dom) {
@@ -133,7 +133,7 @@ class Wiki {
     
             $('.wikislist').append($.parseHTML(reElement));
         })
-        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
 
     static remove(dom) {
@@ -282,7 +282,7 @@ window.onload = function() {
             console.log('Loading Wiki: '+wikiDom)
             wan.wikis.push(wikiDom);
             Wiki.add(wikiDom);
-            if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
+            if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
         }, 1000 * count)
     });
 
