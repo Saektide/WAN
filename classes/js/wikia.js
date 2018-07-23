@@ -1,3 +1,11 @@
+var USER_AGENT = 'WikiaActivityNotifier (saektide.com/wan) by LemonSaektide.';
+
+$.ajaxSetup({
+    beforeSend: function(request) {
+      request.setRequestHeader("User-Agent",USER_AGENT);
+    }
+});
+
 class Wikia {
     constructor() {
         return console.warn('Wikia is a static class!');
