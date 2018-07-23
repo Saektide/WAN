@@ -191,25 +191,10 @@ class IO {
                 },
                 (err)=>{
                     console.log(err)
-                    if (err.status == 429) {
-                        
-                        if (!wan.onCoolDown) {
-                            clearInterval(intRC);
-                            wan.onCoolDown = true;
-                            new Notification(
-                                'Oops!',
-                                {body:'Seems we got a 429 error code in our operation, WAN will be restart in 60 minutes.'}
-                            );
-                            setTimeout(()=>{
-                                new Notification(
-                                    'Restarting WAN...'
-                                );
-                                IO.start();
-                                wan.onCoolDown = false;
-                            },3600000)
-                            
-                        }
-                    }
+                    new Modal (
+                        'Something went wrong...',
+                        'We\'re receiving failed responses (like 404, 403, 500). Please check de Developer Console.'
+                    )
                 })
             });
         },4000)
@@ -321,8 +306,3 @@ window.onload = function() {
 
     setTimeout(Modal.hide, 2000);
 }
-
-new Modal(
-    'Wikia Activity Notifier',
-    'Loading...'
-);
