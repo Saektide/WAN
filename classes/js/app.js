@@ -282,7 +282,7 @@ window.onload = function() {
             console.log('Loading Wiki: '+wikiDom)
             wan.wikis.push(wikiDom);
             Wiki.add(wikiDom);
-            if (wan.wikis.length >= MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
+            if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
         }, 1000 * count)
     });
 
