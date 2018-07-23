@@ -4,8 +4,6 @@ include './classes/session.php';
 include './i18n/en.php';
 header('Access-Control-Allow-Origin: *');
 
-$q_AppVersion = '1.3';
-
 ?>
 
 <html lang="en">
@@ -38,7 +36,7 @@ $q_AppVersion = '1.3';
         </div>
         <!-- Main -->
         <div class="navbar">
-            <span class="brand-min"><?php echo $i_BrandMin; ?> | <?php echo $q_AppVersion; ?></span>
+            <span class="brand-min"><?php echo $i_BrandMin; ?></span>
             <button id="whatisnew">What's New?</button>
             <button id="aboutwan">About WAN</button>
             <button id="faq">FAQ</button>
