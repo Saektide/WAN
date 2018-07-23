@@ -4,7 +4,7 @@ include './classes/session.php';
 include './i18n/en.php';
 header('Access-Control-Allow-Origin: *');
 
-$q_AppVersion = '1.2';
+$q_AppVersion = '1.3';
 
 ?>
 

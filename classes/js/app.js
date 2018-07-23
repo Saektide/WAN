@@ -1,11 +1,10 @@
-console.log('[ Ready! ]');
-
 var wan = {
     statusFocus: false,
     isNotifyAllowed: false,
     rememberedNotifies: false,
     wikis: [],
-    lastRC: {}
+    lastRC: {},
+    MAX_WIKIS_NUMBER: 5
 }
 
 if (Notification.permission !== 'granted') {
@@ -75,6 +74,7 @@ class Session {
                 'Remove Wiki',
                 'Done! You can close now this window.'
             )
+            if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }
 }
@@ -93,7 +93,14 @@ class Wiki {
             )
             return false;
         }
-
+        // Prevent wiki add abuse
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) {
+            new Modal(
+                'Add Wiki',
+                `ERROR: You have reached the max number of wikis to add here (${wan.MAX_WIKIS_NUMBER}).`
+            )
+            return false;
+        }
         wan.wikis.push(dom);
         $.get('./classes/templates/wikirc.html').done(wiki=>{
             var reElement = wiki
@@ -115,6 +122,7 @@ class Wiki {
                 )
             })
         })
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
     }
 
     static add(dom) {
@@ -125,10 +133,11 @@ class Wiki {
     
             $('.wikislist').append($.parseHTML(reElement));
         })
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
     }
 
     static remove(dom) {
-        Session.removeWiki(wan.wikis.indexOf(dom))
+        Session.removeWiki(wan.wikis.indexOf(dom));
     }
 
     static updateInfo(id, title, user, type, summary, w) {
@@ -288,12 +297,23 @@ window.onload = function() {
             console.log('Loading Wiki: '+wikiDom)
             wan.wikis.push(wikiDom);
             Wiki.add(wikiDom);
+            if (wan.wikis.length >= MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled');
         }, 1000 * count)
-        
     });
 
-    IO.start(); // Start!
+    setInterval(()=>{
+        if ($('.wikirc').length > wan.MAX_WIKIS_NUMBER) {
+            $('.wikirc').remove();
+            wan.wikis = [];
+            new Modal(
+                'Too many wikis to reach RC',
+                'We are detecting some unusual on your current session. We cleared all for avoid this abuse. Please don\'t do that again.'
+            )
+        }
+    },1000)
 
+    IO.start(); // Start!
+    
     new Modal(
         'Wikia Activity Notifier',
         'Welcome!'
