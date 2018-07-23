@@ -290,6 +290,7 @@ window.onload = function() {
         if ($('.wikirc').length > wan.MAX_WIKIS_NUMBER) {
             $('.wikirc').remove();
             wan.wikis = [];
+            Session.destroySession();
             new Modal(
                 'Too many wikis to reach RC',
                 'We are detecting some unusual on your current session. We cleared all for avoid this abuse. Please don\'t do that again.'
