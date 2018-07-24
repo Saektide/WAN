@@ -1,7 +1,8 @@
 <?php 
 
 include './classes/session.php';
-include './i18n/en.php';
+include './classes/location.php';
+
 header('Access-Control-Allow-Origin: *');
 
 ?>
@@ -37,14 +38,14 @@ header('Access-Control-Allow-Origin: *');
         <!-- Main -->
         <div class="navbar">
             <span class="brand-min"><?php echo $i_BrandMin; ?></span>
-            <button id="whatisnew">What's New?</button>
-            <button id="aboutwan">About WAN</button>
-            <button id="faq">FAQ</button>
+            <button id="whatisnew"><?php echo $i_WhatIsNew; ?></button>
+            <button id="aboutwan"><?php echo $i_AboutWAN; ?></button>
+            <button id="faq"><?php echo $i_FAQ; ?></button>
         </div>
         <div class="container">
             <h2><?php echo $i_Brand; ?></h2>
             <div class="actionbuttons">
-            <button id="addwiki">Add wiki</button>
+            <button id="addwiki"><?php echo $i_AddWiki; ?></button>
             </div>
             <div class="wikislist">
             </div>
@@ -55,9 +56,12 @@ header('Access-Control-Allow-Origin: *');
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <script src="./classes/js/wikia.js"></script>
+    <script src="./i18n/i18n.js"></script>
     <script src="./classes/js/app.js"></script>
     <script>
     wan.preWikis = <?php echo json_encode($_SESSION['wikis']);?>
+    
+    wan.preferedLang = '<?php echo $_SESSION['lang'];?>'
     </script>
 </body>
 </html>

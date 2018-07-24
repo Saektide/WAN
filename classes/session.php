@@ -8,6 +8,10 @@ if (!$_SESSION['wikis']) {
     $_SESSION['wikis'] = array();
 }
 
+if (!$_SESSION['lang']) {
+    $_SESSION['lang'] = 'en';
+}
+
 $action = $_POST['action'];
 
 if ($action == 'destroy') {

@@ -19,7 +19,7 @@ $(window).focus(function(){
 }).blur(function(){
     wan.statusFocus = false;
     if (!wan.rememberedNotifies && wan.isNotifyAllowed) {
-        new Notification('WAN is running...', {body: 'WAN still running until you close the tab. We\'ll notify you about recent changes on target wikis.'});
+        new Notification(i18n[wan.preferedLang].wanIsRunning, {body: i18n[wan.preferedLang].wanIsRunning2});
         wan.rememberedNotifies = true;
     }
 })
@@ -64,15 +64,15 @@ class Session {
 
     static removeWiki(id) {
         new Modal(
-            'Remove Wiki',
-            'Removing from your session...'
+            i18n[wan.preferedLang].removeWiki,
+            i18n[wan.preferedLang].removeWikiProccess
         )
         $(`.wikirc#${id}`).remove();
         wan.wikis.splice(id, 1);
         $.post('./classes/session.php',{action:'removeWiki', id: id}).done(()=>{
             new Modal(
-                'Remove Wiki',
-                'Done! You can close now this window.'
+                i18n[wan.preferedLang].removeWiki,
+                i18n[wan.preferedLang].removeWikiDone
             )
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
@@ -82,27 +82,27 @@ class Session {
 class Wiki {
     constructor(dom) {
         new Modal(
-            'Add Wiki',
-            'Adding...'
+            i18n[wan.preferedLang].addWiki,
+            i18n[wan.preferedLang].addWikiProcess
         )
         // Prevent HTTPS denial
         if (Boolean(dom.match(/\./g))) {
             new Modal(
-                'Add Wiki',
-                'ERROR: This wiki seems hasn\'t HTTPS. WAN won\'t add your wiki until Wikia inject HTTPS in all wikis.'
+                i18n[wan.preferedLang].addWiki,
+                i18n[wan.preferedLang].addWikiNotHTTPS
             )
             return false;
         }
         // Prevent wiki add abuse
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) {
             new Modal(
-                'Add Wiki',
-                `ERROR: You have reached the max number of wikis to add here (${wan.MAX_WIKIS_NUMBER}).`
+                i18n[wan.preferedLang].addWiki,
+                i18n[wan.preferedLang].addWikiReachedLimit
             )
             return false;
         }
         wan.wikis.push(dom);
-        $.get('./classes/templates/wikirc.html').done(wiki=>{
+        $.get(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
             .replace(/\$2/g,dom);
@@ -110,15 +110,15 @@ class Wiki {
             $('.wikislist').append($.parseHTML(reElement));
 
             new Modal(
-                'Add Wiki',
-                'Saving session...'
+                i18n[wan.preferedLang].addWiki,
+                i18n[wan.preferedLang].addWikiSavingSession
             )
 
             Session.saveWiki(dom,(data)=>{
                 console.log(data);
                 new Modal(
-                    'Add Wiki',
-                    'Added wiki! You can close now this window.'
+                    i18n[wan.preferedLang].addWiki,
+                    i18n[wan.preferedLang].addWikiDone
                 )
             })
         })
@@ -126,7 +126,7 @@ class Wiki {
     }
 
     static add(dom) {
-        $.post('./classes/templates/wikirc.html').done(wiki=>{
+        $.post(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
             .replace(/\$2/g,dom);
@@ -143,7 +143,7 @@ class Wiki {
     static updateInfo(id, title, user, type, summary, w) {
         let x = `.wikirc#${id}`;
         let displaytitle = title;
-        if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = 'A message';
+        if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = i18n[wan.preferedLang].aMessage;
 
         $(`${x} .lastrc > .lasttitle`).html(`<a href="https://${w}.wikia.com/wiki/${title}" target="_blank">${displaytitle}</a>`);
         $(`${x} .lastrc > .lastuser`).text(user);
@@ -192,8 +192,8 @@ class IO {
                 (err)=>{
                     console.log(err)
                     new Modal (
-                        'Something went wrong...',
-                        'We\'re receiving failed responses (like 404, 403, 500). Please check de Developer Console.'
+                        i18n[wan.preferedLang].somethingWentWrong,
+                        i18n[wan.preferedLang].somethingWentWrongBody
                     )
                 })
             });
@@ -205,12 +205,12 @@ class IO {
 
 $('#addwiki').click(function(){
     new Modal(
-        'Add Wiki',
-        'Loading...'
+        i18n[wan.preferedLang].addWiki,
+        i18n[wan.preferedLang].loading
     )
-    $.post('./classes/templates/addwikiform.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/addwikiform.html`).done(data=>{
         new Modal(
-            'Add Wiki',
+            i18n[wan.preferedLang].addWiki,
             data
         )
         
@@ -227,12 +227,12 @@ $('#addwiki').click(function(){
 
 $('#faq').click(function(){
     new Modal(
-        'FAQ',
-        'Loading...'
+        i18n[wan.preferedLang].faq,
+        i18n[wan.preferedLang].loading
     )
-    $.post('./classes/templates/faq.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/faq.html`).done(data=>{
         new Modal(
-            'FAQ',
+            i18n[wan.preferedLang].faq,
             data
         )
     })
@@ -240,12 +240,12 @@ $('#faq').click(function(){
 
 $('#whatisnew').click(function(){
     new Modal(
-        'Updates',
-        'Loading...'
+        i18n[wan.preferedLang].updates,
+        i18n[wan.preferedLang].loading
     )
-    $.post('./classes/templates/whatisnew.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/whatisnew.html`).done(data=>{
         new Modal(
-            'Updates',
+            i18n[wan.preferedLang].updates,
             data
         )
     })
@@ -253,12 +253,12 @@ $('#whatisnew').click(function(){
 
 $('#aboutwan').click(function(){
     new Modal(
-        'About WikiaActivityNotifier',
-        'Loading...'
+        i18n[wan.preferedLang].aboutWAN,
+        i18n[wan.preferedLang].loading
     )
-    $.post('./classes/templates/aboutwan.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/aboutwan.html`).done(data=>{
         new Modal(
-            'About WikiaActivityNotifier',
+            i18n[wan.preferedLang].aboutWAN,
             data
         )
     })
@@ -268,7 +268,7 @@ window.onload = function() {
     if (location.protocol != 'https:') {
         new Modal(
             'Wikia Activity Notifier',
-            'Redirecting to HTTPS site...'
+            i18n[wan.preferedLang].redirectingToHTTPS
         );
         window.location = 'https://saektide.com/wan';
         return;
@@ -292,8 +292,8 @@ window.onload = function() {
             wan.wikis = [];
             Session.destroySession();
             new Modal(
-                'Too many wikis to reach RC',
-                'We are detecting some unusual on your current session. We cleared all for avoid this abuse. Please don\'t do that again.'
+                i18n[wan.preferedLang].abuseDetected,
+                i18n[wan.preferedLang].abuseDetectedBody
             )
         }
     },1000)
@@ -302,7 +302,7 @@ window.onload = function() {
     
     new Modal(
         'Wikia Activity Notifier',
-        'Welcome!'
+        i18n[wan.preferedLang].welcome
     );
 
     setTimeout(Modal.hide, 2000);
