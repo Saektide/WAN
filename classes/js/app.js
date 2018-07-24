@@ -265,14 +265,19 @@ $('#aboutwan').click(function(){
 })
 
 window.onload = function() {
-    if (location.protocol != 'https:') {
-        new Modal(
-            'Wikia Activity Notifier',
-            i18n[wan.preferedLang].redirectingToHTTPS
-        );
-        window.location = 'https://saektide.com/wan';
-        return;
+    if (location.hostname != 'localhost') {
+        if (location.protocol != 'https:') {
+            new Modal(
+                'Wikia Activity Notifier',
+                i18n[wan.preferedLang].redirectingToHTTPS
+            );
+            setTimeout(()=>{
+                window.location = 'https://saektide.com/wan';
+            },2500)
+            return;
+        }
     }
+    
 
 
     let count = 0;
