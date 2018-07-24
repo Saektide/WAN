@@ -58,7 +58,8 @@ header('Access-Control-Allow-Origin: *');
     <script src="./classes/js/app.js"></script>
     <script>
     wan.preWikis = <?php echo json_encode($_SESSION['wikis']);?>
-    wan.preferedLang = <?php echo $_SESSION['lang'];?>
+    
+    wan.preferedLang = '<?php echo $_SESSION['lang'];?>'
     </script>
 </body>
 </html>
