@@ -30,5 +30,29 @@ const i18n = {
         aboutWAN: 'About WikiaActivityNotifier',
         updates: 'Updates',
         faq: 'FAQ'
+    },
+    es: {
+        wanIsRunning: 'WAN está ejecutandose...',
+        wanIsRunning2: 'WAN seguirá ejecutandose hasta que cierres la pestaña. Te notificaremos acerca de cambios recientes en los wikis señalados.',
+        removeWiki: 'Remover Wiki',
+        removeWikiProcess: 'Removiendo de tu sesión',
+        removeWikiDone: 'Listo! Ahora puedes cerrar esta ventana.',
+        addWiki: 'Añadir wiki',
+        addWikiProcess: 'Añadiendo...',
+        addWikiNotHTTPS: 'ERROR: Este wiki parece no tener HTTPS. WAN no va añadir tu wiki hasta que Wikia inyecte HTTPS en todos los wikis.',
+        addWikiReachedLimit: 'ERROR: Has alcanzado el número máximo de wikis para añadir aquí.',
+        addWikiSavingSession: 'Guardando sesión...',
+        addWikiDone: 'Wiki añadido! Ahora puedes cerrar esta ventana.',
+        aMessage: 'Un mensaje',
+        somethingWentWrong: 'Algo salió mal',
+        somethingWentWrongBody: 'Estamos recibiendo respuestas fallidas (como 404, 403, 500). Por favor revisa la Consola de Desarrollador.',
+        loading: 'Cargando...',
+        abuseDetected: 'Demasiadas wikis para alcanzar los cambios recientes',
+        abuseDetectedBody: 'Estamos detectando algo inusual en tu sesión actual. Hemos limpiado todo para evitar este abuso. Por favor no lo hagas de nuevo.',
+        welcome: '¡Bienvenido!',
+        redirectingToHTTPS: 'Redirigiendo al sitio HTTPS...',
+        aboutWAN: 'Acerca de WikiaActivityNotifier',
+        updates: 'Actualizaciones',
+        faq: 'PMF'
     }
 }

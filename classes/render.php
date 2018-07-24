@@ -1,7 +1,8 @@
 <?php 
 
 include './classes/session.php';
-include './i18n/en.php';
+include './classes/location.php';
+
 header('Access-Control-Allow-Origin: *');
 
 ?>
