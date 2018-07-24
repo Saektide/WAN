@@ -10,7 +10,7 @@ WAL (WikiaActivityLogger) is not longer working. However, WAN will restrict some
 things like the number of wikis that you added, the HTTPS site, etc. Any bug or
 feedback are welcome on Issues.
 
-#Contribute
+# Contribute
 
 WAN is made of pure PHP, HTML (templates) and JS. We refuse to use any dependence/
 PHP app. If you want to add some code or want to fix a bug please read before this:
