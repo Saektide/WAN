@@ -55,6 +55,7 @@ header('Access-Control-Allow-Origin: *');
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <script src="./classes/js/wikia.js"></script>
+    <script src="./i18n/i18n.js"></script>
     <script src="./classes/js/app.js"></script>
     <script>
     wan.preWikis = <?php echo json_encode($_SESSION['wikis']);?>
