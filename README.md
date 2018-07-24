@@ -5,7 +5,7 @@
 ---
 
 This is the source code of WAN Front End. If you are looking to log those RC
-requests, you can contact to [https://dev.wikia.com/User_talk:KockaAdmiralac](the cube),
+requests, you can contact to (https://dev.wikia.com/User_talk:KockaAdmiralac)[the cube],
 WAL (WikiaActivityLogger) is not longer working. However, WAN will restrict some
 things like the number of wikis that you added, the HTTPS site, etc. Any bug or
 feedback are welcome on Issues.
@@ -24,3 +24,11 @@ PHP app. If you want to add some code or want to fix a bug please read before th
 * Don't host this site remotely to any other domain/server. This project has
 MIT License.
 * Don't make several changes in one commit.
+
+So, how can I run WAN on my machine?
+
+# Installation
+
+WAN can be installed in XAMPP, you can download it (https://www.apachefriends.org/download.html)[here].
+You must know, WAN is portable but cannot be copied to another domain. Now,
+if you want to make changes you must "fork" this repository.
