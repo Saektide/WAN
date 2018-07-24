@@ -102,7 +102,7 @@ class Wiki {
             return false;
         }
         wan.wikis.push(dom);
-        $.get('./classes/templates/wikirc.html').done(wiki=>{
+        $.get(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
             .replace(/\$2/g,dom);
@@ -126,7 +126,7 @@ class Wiki {
     }
 
     static add(dom) {
-        $.post('./classes/templates/wikirc.html').done(wiki=>{
+        $.post(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
             .replace(/\$2/g,dom);
@@ -208,7 +208,7 @@ $('#addwiki').click(function(){
         'Add Wiki',
         'Loading...'
     )
-    $.post('./classes/templates/addwikiform.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/addwikiform.html`).done(data=>{
         new Modal(
             'Add Wiki',
             data
@@ -230,7 +230,7 @@ $('#faq').click(function(){
         'FAQ',
         'Loading...'
     )
-    $.post('./classes/templates/faq.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/faq.html`).done(data=>{
         new Modal(
             'FAQ',
             data
@@ -243,7 +243,7 @@ $('#whatisnew').click(function(){
         'Updates',
         'Loading...'
     )
-    $.post('./classes/templates/whatisnew.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/whatisnew.html`).done(data=>{
         new Modal(
             'Updates',
             data
@@ -256,7 +256,7 @@ $('#aboutwan').click(function(){
         'About WikiaActivityNotifier',
         'Loading...'
     )
-    $.post('./classes/templates/aboutwan.html').done(data=>{
+    $.post(`./classes/templates/${wan.preferedLang}/aboutwan.html`).done(data=>{
         new Modal(
             'About WikiaActivityNotifier',
             data

@@ -37,14 +37,14 @@ header('Access-Control-Allow-Origin: *');
         <!-- Main -->
         <div class="navbar">
             <span class="brand-min"><?php echo $i_BrandMin; ?></span>
-            <button id="whatisnew">What's New?</button>
-            <button id="aboutwan">About WAN</button>
-            <button id="faq">FAQ</button>
+            <button id="whatisnew"><?php echo $i_WhatIsNew; ?></button>
+            <button id="aboutwan"><?php echo $i_AboutWAN; ?></button>
+            <button id="faq"><?php echo $i_FAQ; ?></button>
         </div>
         <div class="container">
             <h2><?php echo $i_Brand; ?></h2>
             <div class="actionbuttons">
-            <button id="addwiki">Add wiki</button>
+            <button id="addwiki"><?php echo $i_AddWiki; ?></button>
             </div>
             <div class="wikislist">
             </div>
