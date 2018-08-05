@@ -17,7 +17,7 @@ PHP framework. If you want to add some code or want to fix a bug please read thi
 
 * The JS code must use ES6.
 * The site's PHP version is 5.x, not 7.
-* Don't change the User-Agent or any other fundamental variable list that looks UPPERCASED,
+* Don't change User-Agent or any other enviroment variable that looks UPPERCASED,
 (e.g MAX_NUMBER_WIKIS).
 * Don't change gitlab-ci. We use Travis CI.
 * Don't change .htaccess file.
