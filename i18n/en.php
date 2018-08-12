@@ -13,5 +13,9 @@ $i_FAQ = 'FAQ';
 
 $i_AddWiki = 'Add wiki';
 
+$i_unAuthedInfo = 'Oh, hello. We just upgraded the security here. You can join only if you received an auth key. Do you have it?';
+$i_unAuthedExit = 'Nope';
+$i_unAuthedJoin = 'Yes';
+$i_unAuthedInvalid = 'Make sure it\'s a valid key.';
 
 ?>

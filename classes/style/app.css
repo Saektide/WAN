@@ -224,6 +224,46 @@ ul.faq .q {
     }
 }
 
+.unauthed {
+    left: 0;
+    right: 0;
+    position: absolute;
+    color: #fff;
+    margin: 2em auto;
+    width: calc(100% - 320px);
+    background: #07303a;
+    padding: 1em 2em;
+    text-align: center;
+}
+
+.unauthed > p {
+    margin: 0;
+    border-bottom: 1px solid #105465;
+    padding: 1em;
+}
+
+.unauthed-actions-buttons > button {
+    border: 0;
+    background: #1a9fbf;
+    color: #fff;
+    font-family: Rubik;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin: 0 20px;
+}
+
+.unauthed-warn-invalid-key {
+    background: #ff5656;
+    padding: 10px 0;
+    border-radius: 4px;
+}
+
+span.username-min {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
 @media only screen and (max-width: 320px) {
     .unsupportscreensize {
         display: block;

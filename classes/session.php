@@ -12,6 +12,10 @@ if (!$_SESSION['lang']) {
     $_SESSION['lang'] = 'en';
 }
 
+if (!$_SESSION['auth']) {
+    $_SESSION['auth'] = false;
+}
+
 $action = $_POST['action'];
 
 if ($action == 'destroy') {
@@ -31,6 +35,11 @@ if ($action == 'destroy') {
         if ($wikiID != 0) unset($_SESSION['wikis'][$wikiID]);
         else array_shift($_SESSION['wikis']);
         echo 'ok';
+    }
+} elseif ($action == 'setTempAuthKey') {
+    $authkey = $_POST['authkey'];
+    if (isset($authkey)) {
+        $_SESSION['auth_key'] = $authkey;
     }
 }
 

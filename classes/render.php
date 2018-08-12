@@ -28,6 +28,7 @@ header('Access-Control-Allow-Origin: *');
                 sorry about this.
             </p>
         </div>
+        <?php if ($_SESSION['auth'] == true): ?>
         <div class="warpmodal hidden">
             <div class="modal hidden">
                 <h3></h3>
@@ -37,19 +38,32 @@ header('Access-Control-Allow-Origin: *');
         </div>
         <!-- Main -->
         <div class="navbar">
-            <span class="brand-min"><?php echo $i_BrandMin; ?></span>
-            <button id="whatisnew"><?php echo $i_WhatIsNew; ?></button>
-            <button id="aboutwan"><?php echo $i_AboutWAN; ?></button>
-            <button id="faq"><?php echo $i_FAQ; ?></button>
+            <span class="brand-min"><?= $i_BrandMin; ?></span>
+            <button id="whatisnew"><?= $i_WhatIsNew; ?></button>
+            <button id="aboutwan"><?= $i_AboutWAN; ?></button>
+            <button id="faq"><?= $i_FAQ; ?></button>
+            <span class="username-min"><?= $_SESSION['username']; ?></span>
         </div>
         <div class="container">
-            <h2><?php echo $i_Brand; ?></h2>
+            <h2><?= $i_Brand; ?></h2>
             <div class="actionbuttons">
-            <button id="addwiki"><?php echo $i_AddWiki; ?></button>
+            <button id="addwiki"><?= $i_AddWiki; ?></button>
             </div>
             <div class="wikislist">
             </div>
         </div>
+        <?php else: ?>
+        <div class="unauthed">
+            <?php if (isset($_GET['failed'])): ?>
+            <div class="unauthed-warn-invalid-key"><?= $i_unAuthedInvalid ?></div>
+            <?php endif;?>
+            <p><?= $i_unAuthedInfo ?></p><br/>
+            <div class="unauthed-actions-buttons">
+                <button id="app-exit"><?=$i_unAuthedExit; ?></button>
+                <button id="app-join"><?=$i_unAuthedJoin; ?></button>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
