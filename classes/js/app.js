@@ -77,12 +77,6 @@ class Session {
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }
-
-    static setAuthKeyTemp(key) {
-        $.post('./classes/session.php',{action:'setTempAuthKey', authkey: key}).done(()=>{
-            location.href = './dex_auth';
-        });
-    }
 }
 
 class Wiki {
@@ -92,6 +86,7 @@ class Wiki {
             i18n[wan.preferedLang].addWikiProcess
         )
         // Prevent HTTPS denial
+        /*
         if (Boolean(dom.match(/\./g))) {
             new Modal(
                 i18n[wan.preferedLang].addWiki,
@@ -99,6 +94,7 @@ class Wiki {
             )
             return false;
         }
+        */
         // Prevent wiki add abuse
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) {
             new Modal(
@@ -317,16 +313,4 @@ window.onload = function() {
     );
 
     setTimeout(Modal.hide, 2000);
-}
-
-if (Boolean($('.unauthed').length)) {
-    $('#app-exit').click(()=>{
-        location.href = 'https://c.wikia.com';
-    })
-
-    $('#app-join').click(()=>{
-        let AUTH_KEY = prompt('Please enter an auth key');
-        if (AUTH_KEY.length == 0) return;
-        Session.setAuthKeyTemp(AUTH_KEY);
-    })
 }

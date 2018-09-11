@@ -11,8 +11,6 @@ header('Access-Control-Allow-Origin: *');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="description" content="Wikia Activity Notifier, it's a webapp that notifies you about recent changes on a FANDOM/Wikia domain.">
     <title>Wikia Acitivity Notifier</title>
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
@@ -69,13 +67,16 @@ header('Access-Control-Allow-Origin: *');
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+    <?php if ($_SESSION['auth'] == true): ?>
     <script src="./classes/js/wikia.js"></script>
+    <?php endif;?>
     <script src="./i18n/i18n.js"></script>
-    <script src="./classes/js/app.js"></script>
+    <script>const AUTH_STATUS = <?= json_encode($_SESSION['auth']); ?>;</script>
+    <script src="./classes/js/auth.js"></script>
     <script>
-    wan.preWikis = <?php echo json_encode($_SESSION['wikis']);?>
-    
-    wan.preferedLang = '<?php echo $_SESSION['lang'];?>'
+        wan.preWikis = <?= json_encode($_SESSION['wikis']);?>;
+        
+        wan.preferedLang = '<?= $_SESSION['lang'];?>';
     </script>
 </body>
 </html>

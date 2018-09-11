@@ -8,7 +8,6 @@ DB::GETAuth($_SESSION['auth_key'], function($username){
     $_SESSION['username'] = $username;
     header("Location: ../");
 }, function(){
-    echo 'invalid';
     header("Location: ../?failed=1");
 });
 
