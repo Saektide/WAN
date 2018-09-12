@@ -1,5 +1,7 @@
 <?php
+error_reporting(0);
 
+include_once('./session.php');
 header('Access-Control-Allow-Origin: *');
 
 $w = $_GET['w'];
@@ -24,9 +26,13 @@ $options = array(
     )
 );
 $context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-if ($result === FALSE) {
-    die('[]');
+if ($_SESSION['auth']) {
+    $result = file_get_contents($url, false, $context);
+    if ($result === FALSE) {
+        die('[]');
+    }
+} else {
+    die('Invalid session');
 }
 
 echo $result;

@@ -1,3 +1,8 @@
+if (!AUTH_STATUS) {
+    $('script[src="./classes/js/app.js"]').remove();
+    throw new Error('app.js :: Script file was injected but auth status is false! Removing script...');
+}
+
 var wan = {
     statusFocus: false,
     isNotifyAllowed: false,
