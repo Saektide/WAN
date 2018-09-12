@@ -1,3 +1,14 @@
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header set X-XSS-Protection "1; mode=block" 
+# prevent mime based attacks
+Header set X-Content-Type-Options "nosniff"
+Header set Referrer-Policy: same-origin
+Header set Access-Control-Allow-Origin "*"
+Header set Vary: Accept-Encoding
+Header unset X-Powered-By
+
+Options -Indexes
+
 <IfModule pagespeed_module>
 ModPagespeed off
 </IfModule>
