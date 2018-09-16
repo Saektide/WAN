@@ -68,17 +68,9 @@ class Session {
     }
 
     static removeWiki(id) {
-        new Modal(
-            i18n[wan.preferedLang].removeWiki,
-            i18n[wan.preferedLang].removeWikiProccess
-        )
         $(`.wikirc#${id}`).remove();
         wan.wikis.splice(id, 1);
         $.post('./classes/session.php',{action:'removeWiki', id: id}).done(()=>{
-            new Modal(
-                i18n[wan.preferedLang].removeWiki,
-                i18n[wan.preferedLang].removeWikiDone
-            )
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }
@@ -90,16 +82,6 @@ class Wiki {
             i18n[wan.preferedLang].addWiki,
             i18n[wan.preferedLang].addWikiProcess
         )
-        // Prevent HTTPS denial
-        /*
-        if (Boolean(dom.match(/\./g))) {
-            new Modal(
-                i18n[wan.preferedLang].addWiki,
-                i18n[wan.preferedLang].addWikiNotHTTPS
-            )
-            return false;
-        }
-        */
         // Prevent wiki add abuse
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) {
             new Modal(
@@ -152,8 +134,9 @@ class Wiki {
         let displaytitle = title;
         if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = i18n[wan.preferedLang].aMessage;
 
-        $(`${x} .lastrc > .lasttitle`).html(`<a href="https://${w}.wikia.com/wiki/${title}" target="_blank">${displaytitle}</a>`);
-        $(`${x} .lastrc > .lastuser`).text(user);
+        $(`${x} .lastrc > .lasttitle`).html(`<a href="http://${w}.wikia.com/wiki/${title}" target="_blank">${displaytitle}</a>`);
+        $(`${x} .lastrc > .lastuser > a`).text(user);
+        $(`${x} .lastrc > .lastuser > a`).attr('href', `http://${w}.wikia.com/wiki/User:${user}`)
         $(`${x} .lastrc > .lasttype`).text(type);
         $(`${x} .lastsumm span`).text(summary);
 
@@ -169,40 +152,54 @@ class IO {
     static start() {
         console.log('WAN IS NOW START TO MONITORING TARGERED WIKIS')
         let intRC = setInterval(()=>{
-            wan.wikis.forEach(wiki => {
-                Wikia.RC(wiki,(dataRC)=>{
+            Wikia.RC(wan.wikis.join('|'), (raw)=>{
+                Object.keys(raw.wikisRC).forEach(wiki => {
+                    let ROOT = raw.wikisRC[wiki].rc;
+
+                    if (!ROOT) {
+                        console.warn(`[RC] RC is null on ${wiki} - Status code: ${raw.wikisRC[wiki].status}`);
+                        if (raw.wikisRC[wiki].status == 410) {
+                            new Modal (
+                                i18n[wan.preferedLang].closedWiki,
+                                i18n[wan.preferedLang].closedWikiBody.replace(/\$1/g, wiki)
+                            )
+                            Wiki.remove(wiki);
+                        }
+                        return;
+                    }
+                    // New wiki
                     if (!wan.lastRC[wiki]) {
                         Wiki.updateInfo(wan.wikis.indexOf(wiki),
-                        dataRC.query.recentchanges[0].title,
-                        dataRC.query.recentchanges[0].user,
-                        dataRC.query.recentchanges[0].type,
-                        dataRC.query.recentchanges[0].comment,
+                        ROOT.title,
+                        ROOT.user,
+                        ROOT.type,
+                        ROOT.comment,
                         wiki
-                        )
-                        return wan.lastRC[wiki] = dataRC.query.recentchanges[0];
+                        );
+                        return wan.lastRC[wiki] = ROOT;
                     }
-                    if (JSON.stringify(dataRC.query.recentchanges[0]) == JSON.stringify(wan.lastRC[wiki])) console.log('- No changes -');
+                    // Added wiki, verify for changes
+                    if (JSON.stringify(ROOT) == JSON.stringify(wan.lastRC[wiki])) console.log('- Pure / No changes -');
                     else {
-                        console.log('- ON changes -');
-                        new Notification(`New changes at ${wiki}`);
-                        wan.lastRC[wiki] = dataRC.query.recentchanges[0];
+                        console.log('- Custom / Changes detected -');
+                        new Notification(i18n[wan.preferedLang].newChanges.replace(/\$1/g, wiki));
+                        wan.lastRC[wiki] = ROOT;
                         Wiki.updateInfo(wan.wikis.indexOf(wiki),
-                        dataRC.query.recentchanges[0].title,
-                        dataRC.query.recentchanges[0].user,
-                        dataRC.query.recentchanges[0].type,
-                        dataRC.query.recentchanges[0].comment,
+                        ROOT.title,
+                        ROOT.user,
+                        ROOT.type,
+                        ROOT.comment,
                         wiki
-                        )
+                        );
                     }
-                    
-                },
-                (err)=>{
-                    console.log(err)
-                    new Modal (
-                        i18n[wan.preferedLang].somethingWentWrong,
-                        i18n[wan.preferedLang].somethingWentWrongBody
-                    )
                 })
+            },
+            (err)=>{
+                console.log(err);
+                new Modal (
+                    i18n[wan.preferedLang].somethingWentWrong,
+                    i18n[wan.preferedLang].somethingWentWrongBody
+                );
             });
         },4000)
     }

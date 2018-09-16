@@ -29,7 +29,10 @@ const i18n = {
         redirectingToHTTPS: 'Redirecting to HTTPS site...',
         aboutWAN: 'About WikiaActivityNotifier',
         updates: 'Updates',
-        faq: 'FAQ'
+        faq: 'FAQ',
+        closedWiki: 'Closed wiki',
+        closedWikiBody: 'Seems <a href="http://$1.wikia.com/">$1</a> is closed, we removed it of the list.',
+        newChanges: 'New changes at $1'
     },
     es: {
         wanIsRunning: 'WAN está ejecutandose...',
@@ -53,6 +56,9 @@ const i18n = {
         redirectingToHTTPS: 'Redirigiendo al sitio HTTPS...',
         aboutWAN: 'Acerca de WikiaActivityNotifier',
         updates: 'Actualizaciones',
-        faq: 'PMF'
+        faq: 'PMF',
+        closedWiki: 'Wiki cerrado',
+        closedWikiBody: 'Parece que <a href="http://$1.wikia.com/">$1</a> está cerrado, lo hemos removido de la lista.',
+        newChanges: 'Nuevos cambios en $1'
     }
 }

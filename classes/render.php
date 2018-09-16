@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Wikia Activity Notifier, it's a webapp that notifies you about recent changes on a FANDOM/Wikia domain.">
     <title>Wikia Acitivity Notifier</title>
-    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,900" rel="stylesheet">
     <link rel="stylesheet" href="./classes/style/app.css">
 </head>
 <body>

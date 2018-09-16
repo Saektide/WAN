@@ -4,7 +4,6 @@ include './classes/webstart.php';
 
 /**
  * WAN Frontend
- * @version 0.1
  * @author Xaektide Saqriphrx
  * 
  * Main entry for WAN F.E.
