@@ -75,12 +75,13 @@ body a:hover {
 
 .warpmodal .modal {
     box-shadow: 0 3px 10px rgba(0,0,0,.34);
-    background: #eee;
+    background: #031419;
+    color: #fff;
     padding: 20px 30px;
-    border-radius: 3px;
+    border-radius: 0;
     overflow: hidden;
     position: relative;
-    margin: 0 20px;
+    margin: 0 120px;
 }
 
 .modal .body {
@@ -94,7 +95,7 @@ body a:hover {
     margin: -20px -30px 15px -30px;
     padding: 15px;
     font-weight: 100;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #082831;
     padding-right: 45px;
 }
 
