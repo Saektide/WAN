@@ -5,7 +5,7 @@ include_once('./session.php'); // For auth session
 header('Access-Control-Allow-Origin: *'); // For CORS policy.
 
 /**
- * Makes a request to API.php
+ * Makes a request to API.php to get RC
  * 
  * @param string $wiki The interwiki domain
  * @param string $userAgent The User-Agent to be used for this request.
@@ -18,6 +18,37 @@ function r__($wiki, $userAgent) {
         'rclimit' => '1',
         'rcprop'  => 'user|title|ids|loginfo|sizes|timestamp|comment|sizes',
         'rcshow'  => '!bot',
+        'format'  => 'json'
+    );
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n".
+                         "User-Agent: $userAgent\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    return $result;
+}
+
+/**
+ * Makes a request to API.php to compare revs
+ * 
+ * @param string $wiki The interwiki domain
+ * @param string $userAgent The User-Agent to be used for this request.
+ * @param number $oldrevid Old revision id to compare
+ * @param number $revid Current revision id
+ */
+function diff__($wiki, $userAgent, $oldrevid, $revid) {
+    $url = 'http://'.$wiki.'.wikia.com/api.php';
+    $data = array(
+        'action'  => 'compare',
+        'fromrev' => $oldrevid,
+        'torev'   => $revid,
         'format'  => 'json'
     );
 
@@ -91,6 +122,14 @@ if ($_SESSION['auth']) { // API will be responds for authed users
         } else {
             $response['wikisRC'][$wiki]['rc'] = json_decode($result)->query->recentchanges[0];
         }
+        // Get DIFF
+        if (json_decode($result)->query->recentchanges[0]->type == 'edit') {
+            $oldRevID = json_decode($result)->query->recentchanges[0]->old_revid;
+            $revID = json_decode($result)->query->recentchanges[0]->revid;
+            $diffResult = diff__($wiki, $UA, $oldRevID, $revID);
+        }
+
+        $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
     }
 } else {
     $response['successAuth'] = false;

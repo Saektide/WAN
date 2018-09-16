@@ -229,7 +229,7 @@ class Wiki {
      * @param {string} summary Revision's summary
      * @param {string} w Interwiki
      */
-    static updateInfo(id, title, user, type, summary, w) {
+    static updateInfo(id, title, user, type, summary, diff, w) {
         let x = `.wikirc#${id}`;
         let displaytitle = title;
         if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = i18n[wan.preferedLang].aMessage;
@@ -239,6 +239,7 @@ class Wiki {
         $(`${x} .lastrc > .lastuser > a`).attr('href', `http://${w}.wikia.com/wiki/User:${user}`)
         $(`${x} .lastrc > .lasttype`).text(type);
         $(`${x} .lastsumm span`).text(summary);
+        $(`${x} .lastdiff table`).html(diff);
 
         console.log(`Wiki #${id} RC Info has been updated!`);
     }
@@ -270,6 +271,10 @@ class IO {
             Wikia.RC(wan.wikis.join('|'), (raw)=>{
                 Object.keys(raw.wikisRC).forEach(wiki => {
                     let ROOT = raw.wikisRC[wiki].rc;
+                    let DIFF;
+                    if (raw.wikisRC[wiki].diff) {
+                        DIFF = raw.wikisRC[wiki].diff['*'];
+                    }
 
                     if (!ROOT) {
                         console.warn(`[RC] RC is null on ${wiki} - Status code: ${raw.wikisRC[wiki].status}`);
@@ -282,6 +287,10 @@ class IO {
                         }
                         return;
                     }
+
+                    if (!DIFF) {
+                        DIFF = null;
+                    }
                     // New wiki
                     if (!wan.lastRC[wiki]) {
                         Wiki.updateInfo(wan.wikis.indexOf(wiki),
@@ -289,6 +298,7 @@ class IO {
                         ROOT.user,
                         ROOT.type,
                         ROOT.comment,
+                        DIFF,
                         wiki
                         );
                         return wan.lastRC[wiki] = ROOT;
@@ -304,6 +314,7 @@ class IO {
                         ROOT.user,
                         ROOT.type,
                         ROOT.comment,
+                        DIFF,
                         wiki
                         );
                     }

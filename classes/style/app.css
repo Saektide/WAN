@@ -216,6 +216,65 @@ ul.faq .q {
     display: none;
 }
 
+/* Diff */
+
+.lastdiff {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #03282f;
+}
+
+.lastdiff table {
+    width: 100%;
+    color: #fff;
+}
+
+.lastdiff > table .diff-lineno {
+    border-bottom: 1px solid #03282f;
+    font-size: 16pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 #1aaeca;
+}
+
+.lastdiff > table .diff-context {
+    padding: 2px 8px;
+    opacity: .4;
+}
+
+.lastdiff > table .diff-empty {
+    background: rgba(255,255,255,.1);
+    border-radius: 5px;
+}
+
+.lastdiff > table .diff-addedline {
+    background: #155c6d;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.lastdiff > table .diff-deletedline {
+    background: #460e0e;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.lastdiff > table del {
+    background: #842323;
+    padding: 2px 4px;
+    margin: 0 2px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.lastdiff > table ins {
+    background: #288196;
+    padding: 2px 4px;
+    margin: 2px 0;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
 /* For smaller devices */
 
 @media only screen and (max-width: 768px) {
