@@ -235,6 +235,7 @@ ul.faq .q {
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: 2px 2px 0 #1aaeca;
+    width: 50%;
 }
 
 .lastdiff > table .diff-context {
