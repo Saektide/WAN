@@ -1,8 +1,28 @@
+// Remember: Don't change/modify/delete variable that looks UPPERCASED.
+/**
+ * For "cheaters", AUTH_STATUS will be provided by PHP.
+ * if it false, app.js will be auto-removed.
+ * If it is't, app.js will be loaded, without returning any error.
+ * 
+ * Note: AUTH_STATUS is a const variable.
+ */
 if (!AUTH_STATUS) {
     $('script[src="./classes/js/app.js"]').remove();
     throw new Error('app.js :: Script file was injected but auth status is false! Removing script...');
 }
 
+/**
+ * The main object for webapp
+ * 
+ * @type {object}
+ * @property {boolean} statusFocus Indicates the current status of tab/window.
+ * @property {boolean} isNotifyAllowed Indicates the current status of notifies (allowed or not).
+ * @property {boolean} rememberedNotifies Indicates if user was warned about notifies.
+ * @property {array} wikis Wikis will be listed here.
+ * @property {object} lastRC WikisRC will be stored here.
+ * @property {number} MAX_WIKIS_NUMBER (UPPERCASED var) is the max. number of wikis that can
+ * be stored on "wikis" array.
+ */
 var wan = {
     statusFocus: false,
     isNotifyAllowed: false,
@@ -12,6 +32,7 @@ var wan = {
     MAX_WIKIS_NUMBER: 5
 }
 
+// Verify if permission for Notification is granted or not.
 if (Notification.permission !== 'granted') {
     Notification.requestPermission().then(function(state){
         if (state !== 'granted') wan.isNotifyAllowed = false;
@@ -29,7 +50,19 @@ $(window).focus(function(){
     }
 })
 
+/**
+ * Main class for Modal/Dialog window
+ * 
+ * @class Modal
+ */
 class Modal {
+    /**
+     * Invokes a new modal
+     * 
+     * @constructor
+     * @param {string} title
+     * @param {string} body
+     */
     constructor(title, body) {
         $('.modal > h3').text(title);
         if (body == null) $('.modal > .body').html('');
@@ -43,7 +76,12 @@ class Modal {
 
         $('#closemodal').click(Modal.hide)
     }
-
+    /**
+     * Hides the invoked modal
+     * 
+     * @function hide
+     * @static
+     */
     static hide() {
         // Set classes for Modal Window
         $('.modal').removeClass('active');
@@ -53,20 +91,48 @@ class Modal {
         $('.warpmodal').addClass('hidden');
     }
 }
-
+/**
+ * Session controller. This class actually is static.
+ * 
+ * @class Session
+ */
 class Session {
+    /**
+     * User will be warned for invoke this class.
+     * 
+     * @constructor
+     */
     constructor() {
         return console.warn('Session is a static class!');
     }
 
+    /**
+     * Destroy current session (auth, wikis, etc)
+     * 
+     * @static
+     * @callback func
+     */
     static destroySession(func) {
         $.post('./classes/session.php',{action:'destroy'}).done(func);
     }
 
+    /**
+     * Store wiki in current session
+     * 
+     * @static
+     * @param {string} domain
+     * @callback func
+     */
     static saveWiki(domain, func) {
         $.post('./classes/session.php',{action:'saveWiki', wiki: domain}).done(func);
     }
 
+    /**
+     * Remove wiki in current session
+     * 
+     * @static
+     * @param {number} id
+     */
     static removeWiki(id) {
         $(`.wikirc#${id}`).remove();
         wan.wikis.splice(id, 1);
@@ -76,7 +142,18 @@ class Session {
     }
 }
 
+/**
+ * Wiki controller.
+ * 
+ * @class Wiki
+ */
 class Wiki {
+    /**
+     * If Wiki class is invoked, this will add the wiki
+     * 
+     * @constructor
+     * @param {string} dom Interwiki
+     */
     constructor(dom) {
         new Modal(
             i18n[wan.preferedLang].addWiki,
@@ -90,7 +167,7 @@ class Wiki {
             )
             return false;
         }
-        wan.wikis.push(dom);
+        wan.wikis.push(dom); // Add wiki to list
         $.get(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
@@ -114,6 +191,12 @@ class Wiki {
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
 
+    /**
+     * Add manually a wiki
+     * 
+     * @static
+     * @param {string} dom Interwiki
+     */
     static add(dom) {
         $.post(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
@@ -125,10 +208,27 @@ class Wiki {
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
 
+    /**
+     * Remove manually a wiki
+     * 
+     * @static
+     * @param {string} dom Interwiki
+     */
     static remove(dom) {
         Session.removeWiki(wan.wikis.indexOf(dom));
     }
 
+    /**
+     * Update the RC info for a wiki
+     * 
+     * @static
+     * @param {number} id WikiRC ID
+     * @param {string} title Article title
+     * @param {string} user User that made changes
+     * @param {string} type Type of change (edit|log|new)
+     * @param {string} summary Revision's summary
+     * @param {string} w Interwiki
+     */
     static updateInfo(id, title, user, type, summary, w) {
         let x = `.wikirc#${id}`;
         let displaytitle = title;
@@ -144,11 +244,26 @@ class Wiki {
     }
 }
 
+/**
+ * IO controller. This class is static.
+ * 
+ * @class IO
+ */
 class IO {
+    /**
+     * User will be warned for invoke this class.
+     * 
+     * @constructor
+     */
     constructor() {
         return console.warn('IO is a static class!');
     }
 
+    /**
+     * Starts to monitoring wikis in the list (wan.wikis)
+     * 
+     * @static
+     */
     static start() {
         console.log('WAN IS NOW START TO MONITORING TARGERED WIKIS')
         let intRC = setInterval(()=>{
@@ -205,7 +320,7 @@ class IO {
     }
 }
 
-// -- Main
+// Button actions
 
 $('#addwiki').click(function(){
     new Modal(

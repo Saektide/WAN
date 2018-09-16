@@ -1,10 +1,15 @@
 <?php
-header('Content-type: application/json;charset=utf-8');
-error_reporting(0);
+header('Content-type: application/json;charset=utf-8'); // Set for JSON content.
+error_reporting(0); // For warnings and notices.
+include_once('./session.php'); // For auth session
+header('Access-Control-Allow-Origin: *'); // For CORS policy.
 
-include_once('./session.php');
-header('Access-Control-Allow-Origin: *');
-
+/**
+ * Makes a request to API.php
+ * 
+ * @param string $wiki The interwiki domain
+ * @param string $userAgent The User-Agent to be used for this request.
+ */
 function r__($wiki, $userAgent) {
     $url = 'http://'.$wiki.'.wikia.com/api.php';
     $data = array(
@@ -30,17 +35,16 @@ function r__($wiki, $userAgent) {
     return $result;
 }
 
-$response = array();
+$response = array(); // Here starts for JSON response.
 
-$w = $_GET['w'];
-$UA = 'Wikia Activity Notifier (saektide.com/wan) by LemonSaektide';
+$w = $_GET['w']; // Get "w" param
+$UA = 'Wikia Activity Notifier (saektide.com/wan) by LemonSaektide'; // Default User-Agent
+$wikis = explode('|', $w); // Split $w for get wikis, example: ?w=ut|terraria|c
+$response['wikisList'] = $wikis; // Append wikis in a single list
 
-$wikis = explode('|', $w);
-
-$response['wikisList'] = $wikis;
-
-if ($_SESSION['auth']) {
+if ($_SESSION['auth']) { // API will be responds for authed users
     $response['successAuth'] = true;
+    // First time, doesn't require the r__ function.
     foreach ($wikis as $wiki) {
 
         $url = 'http://'.$wiki.'.wikia.com/api.php';
@@ -64,9 +68,17 @@ if ($_SESSION['auth']) {
         $context  = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
 
+        /**
+         * Note:
+         * 
+         * $http_response_header[0] is the Status HTTP (404, 200, 410, 301, etc)
+         * $http_response_header[6] is the Location (if Status HTTP is 301)
+         */
+
         preg_match('/HTTP\/1.1 (.*?) /', $http_response_header[0], $responseMatch, PREG_OFFSET_CAPTURE);
         $response['wikisRC'][$wiki]['status'] = $responseMatch[1][0];
         if ($responseMatch[1][0] == '301') {
+            // 301 means for permanent redirect
             $response['wikisRC'][$wiki]['from'] = $wiki;
             preg_match('/Location: http(s)?:\/\/(.*).wikia.com\/api.php/', $http_response_header[6], $redirectMatch, PREG_OFFSET_CAPTURE);
             $response['wikisRC'][$wiki]['to'] = $redirectMatch[2][0];
@@ -74,6 +86,7 @@ if ($_SESSION['auth']) {
             $result = r__($redirectMatch[2][0], $UA);
         }
         if ($result === FALSE) {
+            // RC key will be null if request fails
             $response['wikisRC'][$wiki]['rc'] = null;
         } else {
             $response['wikisRC'][$wiki]['rc'] = json_decode($result)->query->recentchanges[0];
@@ -84,6 +97,6 @@ if ($_SESSION['auth']) {
     $response['info'] = 'Invalid session';
 }
 
-echo json_encode($response, 448);
+echo json_encode($response, 448); // Print the JSON encoded and formatted
 
 ?>

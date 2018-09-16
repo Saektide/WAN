@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+session_start(); // Session always starts
 
 // Review session
 
@@ -15,6 +15,12 @@ if (!$_SESSION['lang']) {
 if (!$_SESSION['auth']) {
     $_SESSION['auth'] = false;
 }
+
+/**
+ * "action" is used as an API Session.
+ * 
+ * @var string
+ */
 
 $action = $_POST['action'];
 

@@ -1,9 +1,7 @@
 <?php 
-
+// Include some PHP classes
 include './classes/session.php';
 include './classes/location.php';
-
-header('Access-Control-Allow-Origin: *');
 
 ?>
 

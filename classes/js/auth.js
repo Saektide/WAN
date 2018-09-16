@@ -1,3 +1,9 @@
+/**
+ * Display the welcome-restricted page.
+ * 
+ * This page will be displayed if AUTH_STATUS is false and
+ * ".unauthed" element exists.
+ */
 if (Boolean($('.unauthed').length) && !AUTH_STATUS) {
     $('#app-exit').click(()=>{
         location.href = 'https://c.wikia.com';
@@ -14,6 +20,7 @@ if (Boolean($('.unauthed').length) && !AUTH_STATUS) {
     })
 }
 
+// app.js (main JS script) will be loaded if AUTH_STATUS is true.
 if (AUTH_STATUS) {
     console.log(AUTH_STATUS);
     $('body > script:last-child').before('<script src="./classes/js/app.js"></script>');
