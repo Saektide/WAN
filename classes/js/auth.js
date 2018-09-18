@@ -9,14 +9,19 @@ if (Boolean($('.unauthed').length) && !AUTH_STATUS) {
         location.href = 'https://c.wikia.com';
     })
 
-    $('#app-join').click(()=>{
-        let AUTH_KEY = prompt('Please enter an auth key');
-        if (AUTH_KEY.length == 0) return;
-
+    $('button#app-join').click(()=>{
         if (AUTH_STATUS) return;
-        $.post('./classes/session.php',{action:'setTempAuthKey', authkey: AUTH_KEY}).done(()=>{
-            location.href = './dex_auth';
-        });
+        $('.modal#appjoin').modal();
+
+        $('.modal#appjoin #appjoin-form').submit(e=>{
+            e.preventDefault();
+            const AUTH_KEY = $('#appjoin-form input#auth').val();
+            console.log(AUTH_KEY);
+            if (!AUTH_KEY) return;
+            $.post('./classes/session.php',{action:'setTempAuthKey', authkey: AUTH_KEY}).done(()=>{
+                location.href = './dex_auth';
+            });
+        })
     })
 }
 

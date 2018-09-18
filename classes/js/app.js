@@ -63,18 +63,39 @@ class Modal {
      * @param {string} title
      * @param {string} body
      */
-    constructor(title, body) {
-        $('.modal > h3').text(title);
-        if (body == null) $('.modal > .body').html('');
-        else $('.modal > .body').html(body);
-        // Set classes for Modal Window
-        $('.modal').removeClass('hidden');
-        $('.modal').addClass('active');
-        // Set classes for Modal Background
-        $('.warpmodal').removeClass('hidden');
-        $('.warpmodal').addClass('active');
+    constructor(title, body, action) {
+        $('#modalfixed > .modal-content > h4').text(title);
+        if (body == null) $('#modalfixed > .modal-content > p').html('');
+        else $('#modalfixed > .modal-content > p').html(body);
 
-        $('#closemodal').click(Modal.hide)
+        $('.loadingDialog').first()[0].M_Toast.remove();
+        
+        $('#modalfixed.modal')
+        .modal()
+        .modal('open')
+
+        $('.addwikiform').submit(e=>{
+            e.preventDefault();
+            this.direct(action);
+        })
+
+        $('#modalfixed .modal-action.modal-close').click(e=>{
+            this.direct(action);
+        })
+    }
+    direct(action) {
+        // Action switch
+        switch(action) {
+            case 'addWiki':
+                console.log('Adding wiki via modal')
+                let wDom = $('.addwikiform [name="domain"]').val();
+                if (wDom.length === 0) return;
+                new Wiki(wDom);
+            break;
+        }
+        // Then
+        $('#modalfixed.modal')
+        .modal('close')
     }
     /**
      * Hides the invoked modal
@@ -134,7 +155,7 @@ class Session {
      * @param {number} id
      */
     static removeWiki(id) {
-        $(`.wikirc#${id}`).remove();
+        $(`.wiki-collapsable#${id}`).remove();
         wan.wikis.splice(id, 1);
         $.post('./classes/session.php',{action:'removeWiki', id: id}).done(()=>{
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
@@ -155,18 +176,8 @@ class Wiki {
      * @param {string} dom Interwiki
      */
     constructor(dom) {
-        new Modal(
-            i18n[wan.preferedLang].addWiki,
-            i18n[wan.preferedLang].addWikiProcess
-        )
         // Prevent wiki add abuse
-        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) {
-            new Modal(
-                i18n[wan.preferedLang].addWiki,
-                i18n[wan.preferedLang].addWikiReachedLimit
-            )
-            return false;
-        }
+        if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) return false;
         wan.wikis.push(dom); // Add wiki to list
         $.get(`./classes/templates/${wan.preferedLang}/wikirc.html`).done(wiki=>{
             var reElement = wiki
@@ -174,18 +185,10 @@ class Wiki {
             .replace(/\$2/g,dom);
 
             $('.wikislist').append($.parseHTML(reElement));
-
-            new Modal(
-                i18n[wan.preferedLang].addWiki,
-                i18n[wan.preferedLang].addWikiSavingSession
-            )
+            $(`.wikirc#${wan.wikis.indexOf(dom)} .details .collapsible`).collapsible()
 
             Session.saveWiki(dom,(data)=>{
                 console.log(data);
-                new Modal(
-                    i18n[wan.preferedLang].addWiki,
-                    i18n[wan.preferedLang].addWikiDone
-                )
             })
         })
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
@@ -204,6 +207,8 @@ class Wiki {
             .replace(/\$2/g,dom);
     
             $('.wikislist').append($.parseHTML(reElement));
+
+            $(`.wikirc#${wan.wikis.indexOf(dom)} .details .collapsible`).collapsible()
         })
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
@@ -331,32 +336,20 @@ class IO {
 // Button actions
 
 $('#addwiki').click(function(){
-    new Modal(
-        i18n[wan.preferedLang].addWiki,
-        i18n[wan.preferedLang].loading
-    )
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+
     $.post(`./classes/templates/${wan.preferedLang}/addwikiform.html`).done(data=>{
         new Modal(
             i18n[wan.preferedLang].addWiki,
-            data
+            data,
+            'addWiki'
         )
-        
-        // On form submit
-        $('form.addwikiform').submit(function(e){
-            e.preventDefault();
-            var realEscDom = $('[name="domain"]').val().trim();
-            if (realEscDom.length != 0) {
-                new Wiki(realEscDom);
-            }
-        })
     })
 })
 
 $('#faq').click(function(){
-    new Modal(
-        i18n[wan.preferedLang].faq,
-        i18n[wan.preferedLang].loading
-    )
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+
     $.post(`./classes/templates/${wan.preferedLang}/faq.html`).done(data=>{
         new Modal(
             i18n[wan.preferedLang].faq,
@@ -366,10 +359,8 @@ $('#faq').click(function(){
 })
 
 $('#whatisnew').click(function(){
-    new Modal(
-        i18n[wan.preferedLang].updates,
-        i18n[wan.preferedLang].loading
-    )
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+
     $.post(`./classes/templates/${wan.preferedLang}/whatisnew.html`).done(data=>{
         new Modal(
             i18n[wan.preferedLang].updates,
@@ -379,10 +370,8 @@ $('#whatisnew').click(function(){
 })
 
 $('#aboutwan').click(function(){
-    new Modal(
-        i18n[wan.preferedLang].aboutWAN,
-        i18n[wan.preferedLang].loading
-    )
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+
     $.post(`./classes/templates/${wan.preferedLang}/aboutwan.html`).done(data=>{
         new Modal(
             i18n[wan.preferedLang].aboutWAN,
@@ -431,11 +420,7 @@ window.onload = function() {
     },1000)
 
     IO.start(); // Start!
-    
-    new Modal(
-        'Wikia Activity Notifier',
-        i18n[wan.preferedLang].welcome
-    );
+    Materialize.toast(i18n[wan.preferedLang].welcome, 3000, 'rounded')
 
     setTimeout(Modal.hide, 2000);
 }

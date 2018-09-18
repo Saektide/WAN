@@ -1,11 +1,6 @@
 body {
     margin: 0;
-    font-family: Rubik;
-    background: #031317;
-}
-
-.hidden {
-    display: none;
+    background: #e4e4e4;
 }
 
 body a {
@@ -18,10 +13,10 @@ body a:hover {
 }
 
 .navbar {
-    background: #03282f;
+    background: #f9f9f9;
     padding: 15px;
     box-shadow: 0 0 7px rgba(0,0,0,.4);
-    color: #fff;
+    color: #2d2d2d;
     position: fixed;
     left: 0;
     right: 0;
@@ -35,17 +30,15 @@ body a:hover {
     padding: 7px 14px;
     margin-left: 10px;
     border-radius: 3px;
-    font-family: Rubik;
     cursor: pointer;
 }
 
 .container {
     position: relative;
     top: 80px;
-    background: #0e3b46;
     margin: 0 auto;
     width: calc(100% - 245px);
-    color: #fff;
+    color: #2d2d2d;
     padding: 15px 30px;
     border-radius: 3px;
     overflow: hidden;
@@ -53,54 +46,19 @@ body a:hover {
 
 .container h2 {
     margin-top: 0;
-    font-weight: 100;
+    font-weight: 400;
+    font-size: 19pt;
 }
 
-.warpmodal {
-    background: rgba(0,0,0,.3);
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: .4s;
-    overflow: hidden;
+.modal h1, .modal h2, .modal h3, .modal h4 {
+    font-size: 16pt;
+    font-weight: 700;
 }
 
-.warpmodal.active {
-    height: 100%;
-}
-
-.warpmodal.hidden {
-    height: 0%;
-}
-
-.warpmodal .modal {
-    box-shadow: 0 3px 10px rgba(0,0,0,.34);
-    background: #031419;
-    color: #fff;
-    padding: 20px 30px;
-    border-radius: 0;
-    overflow: hidden;
-    position: relative;
-    margin: 0 120px;
-}
-
-.modal .body {
-    overflow: hidden;
-    max-height: 380px;
-    overflow-y: auto;
-}
-
-.warpmodal .modal > h3 {
-    margin-top: 0;
-    margin: -20px -30px 15px -30px;
-    padding: 15px;
-    font-weight: 100;
-    border-bottom: 1px solid #082831;
-    padding-right: 45px;
+.modal-content > h4 {
+    border-bottom: 1px solid #e1e1e1;
+    margin: -24px -24px 10px -24px;
+    padding: 12px 24px;
 }
 
 button#closemodal {
@@ -129,7 +87,6 @@ button#closemodal:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,.2);
     cursor: pointer;
     transition: .4s;
-    font-family: Rubik;
 }
 
 .actionbuttons > button:hover {
@@ -137,14 +94,26 @@ button#closemodal:hover {
 }
 
 .wikislist {
-    border-top: 1px solid #03282f;
+    border-top: 1px solid #d6d6d6;
     margin-top: 10px;
+}
+
+.wikislist li .collapsible-header {
+    position: relative;
+}
+
+.wikislist li .collapsible-body {
+    background: #fff;
+}
+
+.wikirc-options {
+    position: absolute;
+    right: 0;
 }
 
 .wikirc {
     position: relative;
-    margin: 10px;
-    border: 1px solid #03282f;
+    margin: -10px -30px;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -158,9 +127,8 @@ button#closemodal:hover {
     margin: 10px 20px;
 }
 
-.wikirc button#removewiki {
+button#removewiki {
     position: absolute;
-    top: 15.5px;
     right: 20px;
     width: 20px;
     height: 20px;
@@ -170,22 +138,23 @@ button#closemodal:hover {
     cursor: pointer;
 }
 
-.wikirc button#removewiki:hover {
+button#removewiki:hover {
     filter: brightness(75%);
 }
 
 .wikirc > h3 {
-    background: #02191d;
-    color: #fff;
-    font-weight: 100;
-    padding: 6px 20px;
-    margin-top: -20px;
+    font-size: 15pt;
+    border-bottom: 1px solid #dddddd;
+    color: #252525;
+    font-weight: 400;
+    padding: 10px 20px;
     margin-bottom: 0;
+    margin: 0 20px;
 }
 
 h3.lastrc .lastuser {
     float: right;
-    border-left: 1px solid #1a94ab;
+    border-left: 1px solid #ddd;
     padding-left: 10px;
     margin-left: 10px;
 }
@@ -222,23 +191,16 @@ ul.faq .q {
 
 /* Diff */
 
-.lastdiff {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #03282f;
-}
-
 .lastdiff table {
     width: 100%;
-    color: #fff;
+    color: #333;
 }
 
 .lastdiff > table .diff-lineno {
-    border-bottom: 1px solid #03282f;
+    border-bottom: 1px solid #dddddd;
     font-size: 16pt;
     font-weight: 700;
     letter-spacing: 1px;
-    text-shadow: 2px 2px 0 #1aaeca;
     width: 50%;
 }
 
@@ -253,19 +215,19 @@ ul.faq .q {
 }
 
 .lastdiff > table .diff-addedline {
-    background: #155c6d;
+    background: #b0f0ff;
     padding: 8px;
     border-radius: 5px;
 }
 
 .lastdiff > table .diff-deletedline {
-    background: #460e0e;
+    background: #ffd7bf;
     padding: 8px;
     border-radius: 5px;
 }
 
 .lastdiff > table del {
-    background: #842323;
+    background: #ffa976;
     padding: 2px 4px;
     margin: 0 2px;
     border-radius: 4px;
@@ -273,7 +235,7 @@ ul.faq .q {
 }
 
 .lastdiff > table ins {
-    background: #288196;
+    background: #6adffb;
     padding: 2px 4px;
     margin: 2px 0;
     border-radius: 4px;
@@ -293,17 +255,19 @@ ul.faq .q {
     left: 0;
     right: 0;
     position: absolute;
-    color: #fff;
+    color: #222;
     margin: 2em auto;
     width: calc(100% - 320px);
-    background: #07303a;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
     padding: 1em 2em;
     text-align: center;
 }
 
 .unauthed > p {
     margin: 0;
-    border-bottom: 1px solid #105465;
+    border-bottom: 1px solid #ddd;
     padding: 1em;
 }
 
@@ -311,8 +275,6 @@ ul.faq .q {
     border: 0;
     background: #1a9fbf;
     color: #fff;
-    font-family: Rubik;
-    padding: 10px 20px;
     border-radius: 4px;
     margin: 0 20px;
 }

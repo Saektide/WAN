@@ -11,7 +11,16 @@ include './classes/location.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Wikia Activity Notifier, it's a webapp that notifies you about recent changes on a FANDOM/Wikia domain.">
     <title>Wikia Acitivity Notifier</title>
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,900" rel="stylesheet">
+    <!-- JQuery CDN -->
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <!-- Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Inject site's CSS -->
     <link rel="stylesheet" href="./classes/style/app.css">
 </head>
 <body>
@@ -25,11 +34,13 @@ include './classes/location.php';
             </p>
         </div>
         <?php if ($_SESSION['auth'] == true): ?>
-        <div class="warpmodal hidden">
-            <div class="modal hidden">
-                <h3></h3>
-                <button id="closemodal">X</button>
-                <div class="body"></div>
+        <div id="modalfixed" class="modal modal-fixed-footer">
+            <div class="modal-content">
+            <h4></h4>
+            <p></p>
+            </div>
+            <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">OK</a>
             </div>
         </div>
         <!-- Main -->
@@ -45,9 +56,10 @@ include './classes/location.php';
             <div class="actionbuttons">
             <button id="addwiki"><?= $i_AddWiki; ?></button>
             </div>
-            <div class="wikislist">
-            </div>
+            <ul class="wikislist collapsible" data-collapsible="expandable">
+            </ul>
         </div>
+        
         <?php else: ?>
         <div class="unauthed">
             <?php if (isset($_GET['failed'])): ?>
@@ -55,16 +67,28 @@ include './classes/location.php';
             <?php endif;?>
             <p><?= $i_unAuthedInfo ?></p><br/>
             <div class="unauthed-actions-buttons">
-                <button id="app-exit"><?=$i_unAuthedExit; ?></button>
-                <button id="app-join"><?=$i_unAuthedJoin; ?></button>
+                <button id="app-exit" class="waves-effect waves-light btn"><?=$i_unAuthedExit; ?></button>
+                <button id="app-join" class="waves-effect waves-light btn modal-trigger" href="#appjoin"><?=$i_unAuthedJoin; ?></button>
+            </div>
+        </div>
+        <!-- App-join module -->
+        <div id="appjoin" class="modal">
+            <div class="modal-content">
+            <h4>AUTH Key</h4>
+            <p>Please type your auth key.</p>
+            <form action="#" id="appjoin-form" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input id="auth" type="password" class="validate" required>
+                    <label for="auth">Auth</label>
+                    </div>
+                </div>
+                <button href="#!" type="submit" id="appjoin-attemp" class="modal-action waves-effect waves-dark btn-flat">Join</button>
+            </form>
             </div>
         </div>
         <?php endif; ?>
     </div>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
     <?php if ($_SESSION['auth'] == true): ?>
     <script src="./classes/js/wikia.js"></script>
     <?php endif;?>

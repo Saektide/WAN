@@ -1,17 +1,37 @@
-<div class="wikirc" id="$1">
-    <h2 class="wikidom"><a href="http://$2.wikia.com/Special:RecentChanges" target="_blank">$2</a></h2>
-    <button id="removewiki" onclick="Session.removeWiki($1)"></button>
-    <h3 class="lastrc">
-        <span class="lasttitle"></span>
-        <span class="lastuser"><a href="#" target="_blank"></a></span>
-        <span class="lasttype"></span>
-    </h3>
-    <div class="details">
-        <div class="lastsumm"><h2>Summary</h2>
-            <span></span>
-        </div>
-        <div class="lastdiff"><h2>Diff</h2>
-            <table></table>
+<li class="wiki-collapsable" id="$1">
+    <div class="collapsible-header">
+        $2
+        <div class="wikirc-options">
+            <button id="removewiki" onclick="Session.removeWiki($1)" class="right"></button>
         </div>
     </div>
-</div>
+    <div class="collapsible-body">
+        <div class="wikirc" id="$1"> 
+            <h3 class="lastrc">
+                <span class="lasttitle"></span>
+                <span class="lastuser"><a href="#" target="_blank"></a></span>
+                <span class="lasttype"></span>
+            </h3>
+            <div class="details">
+                <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                        <div class="collapsible-header waves-effect"><i class="material-icons">chat_bubble_outline</i>Summary</div>
+                        <div class="collapsible-body">
+                            <div class="lastsumm">
+                                <span></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header waves-effect"><i class="material-icons">chrome_reader_mode</i>Diff</div>
+                        <div class="collapsible-body">
+                            <div class="lastdiff">
+                                <table></table>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</li>

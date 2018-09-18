@@ -10,8 +10,8 @@ header('Access-Control-Allow-Origin: *'); // For CORS policy.
  * @param string $wiki The interwiki domain
  * @param string $userAgent The User-Agent to be used for this request.
  */
-function r__($wiki, $userAgent) {
-    $url = 'http://'.$wiki.'.wikia.com/api.php';
+function r__($d, $userAgent) {
+    $url = 'http://'.$d.'.wikia.com/api.php';
     $data = array(
         'action'  => 'query',
         'list'    => 'recentchanges',
@@ -43,8 +43,8 @@ function r__($wiki, $userAgent) {
  * @param number $oldrevid Old revision id to compare
  * @param number $revid Current revision id
  */
-function diff__($wiki, $userAgent, $oldrevid, $revid) {
-    $url = 'http://'.$wiki.'.wikia.com/api.php';
+function diff__($d, $userAgent, $oldrevid, $revid) {
+    $url = 'http://'.$d.'.wikia.com/api.php';
     $data = array(
         'action'  => 'compare',
         'fromrev' => $oldrevid,
