@@ -126,7 +126,8 @@ if ($_SESSION['auth']) { // API will be responds for authed users
         if (json_decode($result)->query->recentchanges[0]->type == 'edit') {
             $oldRevID = json_decode($result)->query->recentchanges[0]->old_revid;
             $revID = json_decode($result)->query->recentchanges[0]->revid;
-            $diffResult = diff__($wiki, $UA, $oldRevID, $revID);
+            if ($redirectMatch) $diffResult = diff__($redirectMatch[2][0], $UA, $oldRevID, $revID);
+            else $diffResult = diff__($wiki, $UA, $oldRevID, $revID);
         }
 
         $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;

@@ -268,6 +268,7 @@ class IO {
     static start() {
         console.log('WAN IS NOW START TO MONITORING TARGERED WIKIS')
         let intRC = setInterval(()=>{
+            if (wan.wikis.length === 0) return;
             Wikia.RC(wan.wikis.join('|'), (raw)=>{
                 Object.keys(raw.wikisRC).forEach(wiki => {
                     let ROOT = raw.wikisRC[wiki].rc;
@@ -322,10 +323,6 @@ class IO {
             },
             (err)=>{
                 console.log(err);
-                new Modal (
-                    i18n[wan.preferedLang].somethingWentWrong,
-                    i18n[wan.preferedLang].somethingWentWrongBody
-                );
             });
         },4000)
     }
