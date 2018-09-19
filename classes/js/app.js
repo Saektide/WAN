@@ -153,11 +153,12 @@ class Session {
      * 
      * @static
      * @param {number} id
+     * @param {string} domain
      */
-    static removeWiki(id) {
+    static removeWiki(id, domain) {
         $(`.wiki-collapsable#${id}`).remove();
-        wan.wikis.splice(id, 1);
-        $.post('./classes/session.php',{action:'removeWiki', id: id}).done(()=>{
+        wan.wikis.splice(wan.wikis.indexOf(domain), 1);
+        $.post('./classes/session.php',{action:'removeWiki', id: wan.wikis.indexOf(domain)}).done(()=>{
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }
@@ -205,7 +206,7 @@ class Wiki {
             var reElement = wiki
             .replace(/\$1/g,wan.wikis.indexOf(dom))
             .replace(/\$2/g,dom);
-    
+        
             $('.wikislist').append($.parseHTML(reElement));
 
             $(`.wikirc#${wan.wikis.indexOf(dom)} .details .collapsible`).collapsible()
@@ -220,7 +221,7 @@ class Wiki {
      * @param {string} dom Interwiki
      */
     static remove(dom) {
-        Session.removeWiki(wan.wikis.indexOf(dom));
+        Session.removeWiki(wan.wikis.indexOf(dom), dom);
     }
 
     /**
@@ -232,13 +233,17 @@ class Wiki {
      * @param {string} user User that made changes
      * @param {string} type Type of change (edit|log|new)
      * @param {string} summary Revision's summary
+     * @param {string} diff Revision's diff
+     * @param {string} sitename Domain's sitename
      * @param {string} w Interwiki
      */
-    static updateInfo(id, title, user, type, summary, diff, w) {
+    static updateInfo(id, title, user, type, summary, diff, sitename, w) {
         let x = `.wikirc#${id}`;
+        let c = `.wiki-collapsable#${id}`;
         let displaytitle = title;
         if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = i18n[wan.preferedLang].aMessage;
 
+        $(`${c} .sitename-wiki`).text(sitename);
         $(`${x} .lastrc > .lasttitle`).html(`<a href="http://${w}.wikia.com/wiki/${title}" target="_blank">${displaytitle}</a>`);
         $(`${x} .lastrc > .lastuser > a`).text(user);
         $(`${x} .lastrc > .lastuser > a`).attr('href', `http://${w}.wikia.com/wiki/User:${user}`)
@@ -278,9 +283,14 @@ class IO {
                 Object.keys(raw.wikisRC).forEach(wiki => {
                     let ROOT = raw.wikisRC[wiki].rc;
                     let DIFF;
+                    let SITENAME;
+
                     if (raw.wikisRC[wiki].diff) {
                         DIFF = raw.wikisRC[wiki].diff['*'];
                     }
+
+                    SITENAME = raw.wikisRC[wiki].siteName;
+                    console.log(`${SITENAME} -- ${wiki}`);
 
                     if (!ROOT) {
                         console.warn(`[RC] RC is null on ${wiki} - Status code: ${raw.wikisRC[wiki].status}`);
@@ -305,6 +315,7 @@ class IO {
                         ROOT.type,
                         ROOT.comment,
                         DIFF,
+                        SITENAME,
                         wiki
                         );
                         return wan.lastRC[wiki] = ROOT;
@@ -321,6 +332,7 @@ class IO {
                         ROOT.type,
                         ROOT.comment,
                         DIFF,
+                        SITENAME,
                         wiki
                         );
                     }

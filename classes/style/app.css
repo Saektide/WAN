@@ -100,6 +100,14 @@ button#closemodal:hover {
 
 .wikislist li .collapsible-header {
     position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.wikislist li .collapsible-header .favicon-wiki {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #ddd;
 }
 
 .wikislist li .collapsible-body {
@@ -109,6 +117,7 @@ button#closemodal:hover {
 .wikirc-options {
     position: absolute;
     right: 0;
+    top: 17.5px;
 }
 
 .wikirc {
@@ -125,6 +134,10 @@ button#closemodal:hover {
 
 .wikirc .details {
     margin: 10px 20px;
+}
+
+.wikirc .details .collapsible-body {
+    background: #f1f1f1;
 }
 
 button#removewiki {
@@ -217,13 +230,15 @@ ul.faq .q {
 .lastdiff > table .diff-addedline {
     background: #b0f0ff;
     padding: 8px;
-    border-radius: 5px;
+    border-radius: 0;
+    border-bottom: 2px solid #fff;
 }
 
 .lastdiff > table .diff-deletedline {
     background: #ffd7bf;
     padding: 8px;
-    border-radius: 5px;
+    border-radius: 0;
+    border-bottom: 2px solid #fff;
 }
 
 .lastdiff > table del {

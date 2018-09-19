@@ -1,8 +1,11 @@
 <li class="wiki-collapsable" id="$1">
         <div class="collapsible-header">
-            $2
+            <span class="favicon-wiki">
+                <img src="https://www.google.com/s2/favicons?domain=$2.wikia.com" alt="">
+            </span>
+            <span class="sitename-wiki">Cargando</span>
             <div class="wikirc-options">
-                <button id="removewiki" onclick="Session.removeWiki($1)" class="right"></button>
+                <button id="removewiki" onclick="Session.removeWiki($1, '$2')" class="right"></button>
             </div>
         </div>
         <div class="collapsible-body">

@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *'); // For CORS policy.
 /**
  * Makes a request to API.php to get RC
  * 
- * @param string $wiki The interwiki domain
+ * @param string $d The interwiki domain
  * @param string $userAgent The User-Agent to be used for this request.
  */
 function r__($d, $userAgent) {
@@ -38,7 +38,7 @@ function r__($d, $userAgent) {
 /**
  * Makes a request to API.php to compare revs
  * 
- * @param string $wiki The interwiki domain
+ * @param string $d The interwiki domain
  * @param string $userAgent The User-Agent to be used for this request.
  * @param number $oldrevid Old revision id to compare
  * @param number $revid Current revision id
@@ -62,6 +62,19 @@ function diff__($d, $userAgent, $oldrevid, $revid) {
     );
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
+
+    return $result;
+}
+
+/**
+ * Get the Mercury - Site data
+ * 
+ * @param string $d The interwiki domain
+ */
+function m__($d) {
+    $url = 'http://'.$d.'.wikia.com/api/v1/Mercury/WikiVariables';
+
+    $result = file_get_contents($url);
 
     return $result;
 }
@@ -129,7 +142,11 @@ if ($_SESSION['auth']) { // API will be responds for authed users
             if ($redirectMatch) $diffResult = diff__($redirectMatch[2][0], $UA, $oldRevID, $revID);
             else $diffResult = diff__($wiki, $UA, $oldRevID, $revID);
         }
+        // Get Mercury (just siteName)
+        if ($redirectMatch) $mercuryResult = m__($redirectMatch[2][0]);
+        else $mercuryResult = m__($wiki);
 
+        $response['wikisRC'][$wiki]['siteName'] = json_decode($mercuryResult)->data->siteName;
         $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
     }
 } else {
