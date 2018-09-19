@@ -65,6 +65,12 @@ body a:hover {
     font-size: 19pt;
 }
 
+.container > h2:first-child {
+    font-weight: 700;
+    text-align: center;
+    font-size: 30pt;
+}
+
 .modal h1, .modal h2, .modal h3, .modal h4 {
     font-size: 16pt;
     font-weight: 700;
@@ -124,6 +130,14 @@ button#closemodal:hover {
     padding-right: 10px;
     margin-right: 10px;
     border-right: 1px solid #ddd;
+}
+
+.wikislist li .collapsible-header .sitename-wiki {
+    color: #888;
+}
+
+.wikislist li .collapsible-header.active .sitename-wiki {
+    color: #333;
 }
 
 .wikislist li .collapsible-body {
@@ -247,14 +261,14 @@ ul.faq .q {
     background: #b0f0ff;
     padding: 8px;
     border-radius: 0;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #f1f1f1;
 }
 
 .lastdiff > table .diff-deletedline {
     background: #ffd7bf;
     padding: 8px;
     border-radius: 0;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #f1f1f1;
 }
 
 .lastdiff > table del {
