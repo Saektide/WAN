@@ -158,7 +158,8 @@ class Session {
     static removeWiki(id, domain) {
         $(`.wiki-collapsable#${id}`).remove();
         wan.wikis.splice(wan.wikis.indexOf(domain), 1);
-        $.post('./classes/session.php',{action:'removeWiki', id: wan.wikis.indexOf(domain)}).done(()=>{
+        $.post('./classes/session.php',{action:'removeWiki', id: id}).done((data)=>{
+            console.log(`Delete response: ${data}`);
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }

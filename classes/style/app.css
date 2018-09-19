@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'GSans R';
+    src: url('./fonts/GoogleSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'GSans B';
+    src: url('./fonts/GoogleSans-Bold.ttf');
+}
+
+html {
+    font-family: 'GSans R';
+}
+
 body {
     margin: 0;
     background: #e4e4e4;
@@ -6,6 +20,7 @@ body {
 body a {
     text-decoration: none;
     color: #10c8ea;
+    font-family: 'GSans B';
 }
 
 body a:hover {
@@ -53,6 +68,7 @@ body a:hover {
 .modal h1, .modal h2, .modal h3, .modal h4 {
     font-size: 16pt;
     font-weight: 700;
+    font-family: 'GSans B';
 }
 
 .modal-content > h4 {

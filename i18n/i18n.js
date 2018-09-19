@@ -10,14 +10,8 @@ const i18n = {
     en: {
         wanIsRunning: 'WAN is running...',
         wanIsRunning2: 'WAN still running until you close the tab. We\'ll notify you about recent changes on target wikis.',
-        removeWiki: 'Remove Wiki',
-        removeWikiProcess: 'Removing from your session...',
-        removeWikiDone: 'Done! You can close now this window.',
+        removedWiki: '$1 removed',
         addWiki: 'Add Wiki',
-        addWikiProcess: 'Adding...',
-        addWikiNotHTTPS: 'ERROR: This wiki seems hasn\'t HTTPS. WAN won\'t add your wiki until Wikia inject HTTPS in all wikis.',
-        addWikiReachedLimit: 'ERROR: You have reached the max number of wikis to add here.',
-        addWikiSavingSession: 'Saving session...',
         addWikiDone: 'Added wiki! You can close now this window.',
         aMessage: 'A message',
         somethingWentWrong: 'Something went wrong...',
@@ -37,15 +31,9 @@ const i18n = {
     es: {
         wanIsRunning: 'WAN está ejecutandose...',
         wanIsRunning2: 'WAN seguirá ejecutandose hasta que cierres la pestaña. Te notificaremos acerca de cambios recientes en los wikis señalados.',
-        removeWiki: 'Remover Wiki',
-        removeWikiProcess: 'Removiendo de tu sesión',
-        removeWikiDone: 'Listo! Ahora puedes cerrar esta ventana.',
+        removedWiki: '$1 ha sido eliminado',
         addWiki: 'Añadir wiki',
-        addWikiProcess: 'Añadiendo...',
-        addWikiNotHTTPS: 'ERROR: Este wiki parece no tener HTTPS. WAN no va añadir tu wiki hasta que Wikia inyecte HTTPS en todos los wikis.',
         addWikiReachedLimit: 'ERROR: Has alcanzado el número máximo de wikis para añadir aquí.',
-        addWikiSavingSession: 'Guardando sesión...',
-        addWikiDone: 'Wiki añadido! Ahora puedes cerrar esta ventana.',
         aMessage: 'Un mensaje',
         somethingWentWrong: 'Algo salió mal',
         somethingWentWrongBody: 'Estamos recibiendo respuestas fallidas (como 404, 403, 500). Por favor revisa la Consola de Desarrollador.',
@@ -58,7 +46,7 @@ const i18n = {
         updates: 'Actualizaciones',
         faq: 'PMF',
         closedWiki: 'Wiki cerrado',
-        closedWikiBody: 'Parece que <a href="http://$1.wikia.com/">$1</a> está cerrado, lo hemos removido de la lista.',
+        closedWikiBody: 'Parece que <a href="http://$1.wikia.com/">$1</a> está cerrado, lo hemos eliminado de la lista.',
         newChanges: 'Nuevos cambios en $1'
     }
 }

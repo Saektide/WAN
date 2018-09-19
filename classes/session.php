@@ -38,9 +38,10 @@ if ($action == 'destroy') {
     $wikiID = $_POST['id'];
     if ($wikiID == null) echo 'failed';
     else {
+        echo 'Wiki target: '.$_SESSION['wikis'][$wikiID];
         if ($wikiID != 0) unset($_SESSION['wikis'][$wikiID]);
         else array_shift($_SESSION['wikis']);
-        echo 'ok';
+        echo ' // ok';
     }
 } elseif ($action == 'setTempAuthKey') {
     $authkey = $_POST['authkey'];
