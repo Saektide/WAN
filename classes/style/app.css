@@ -8,6 +8,10 @@
     src: url('./fonts/GoogleSans-Bold.ttf');
 }
 
+*::selection {
+    background: rgba(93, 203, 224, 0.38);
+}
+
 html {
     font-family: 'GSans R';
 }
