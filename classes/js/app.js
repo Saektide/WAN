@@ -68,7 +68,7 @@ class Modal {
         if (body == null) $('#modalfixed > .modal-content > p').html('');
         else $('#modalfixed > .modal-content > p').html(body);
 
-        $('.loadingDialog').first()[0].M_Toast.remove();
+        if ($('.loadingDialog').first()[0]) $('.loadingDialog').first()[0].M_Toast.remove();
         
         $('#modalfixed.modal')
         .modal()
@@ -295,13 +295,22 @@ class IO {
 
                     if (!ROOT) {
                         console.warn(`[RC] RC is null on ${wiki} - Status code: ${raw.wikisRC[wiki].status}`);
-                        if (raw.wikisRC[wiki].status == 410) {
-                            new Modal (
-                                i18n[wan.preferedLang].closedWiki,
-                                i18n[wan.preferedLang].closedWikiBody.replace(/\$1/g, wiki)
-                            )
-                            Wiki.remove(wiki);
+                        switch (raw.wikisRC[wiki].status) {
+                            case '410':
+                                new Modal (
+                                    i18n[wan.preferedLang].closedWiki,
+                                    i18n[wan.preferedLang].closedWikiBody.replace(/\$1/g, wiki)
+                                )
+                                break;
+                        
+                            case '302':
+                                new Modal (
+                                    i18n[wan.preferedLang].missingWiki,
+                                    i18n[wan.preferedLang].missingWikiBody.replace(/\$1/g, wiki)
+                                )
+                                break;
                         }
+                        Wiki.remove(wiki);
                         return;
                     }
 

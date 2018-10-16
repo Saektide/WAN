@@ -16,6 +16,11 @@ if (!$_SESSION['auth']) {
     $_SESSION['auth'] = false;
 }
 
+if ($_SERVER['HTTP_HOST'] == 'localhost') $onDevRelease = true;
+else $onDevRelease = false;
+
+if ($onDevRelease) $_SESSION['auth'] = true;
+
 /**
  * "action" is used as an API Session.
  * 

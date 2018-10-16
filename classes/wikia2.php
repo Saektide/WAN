@@ -147,7 +147,8 @@ if ($_SESSION['auth']) { // API will be responds for authed users
         else $mercuryResult = m__($wiki);
 
         $response['wikisRC'][$wiki]['siteName'] = json_decode($mercuryResult)->data->siteName;
-        $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
+        if (json_decode($result)->query->recentchanges[0]->type == 'edit') $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
+        else $response['wikisRC'][$wiki]['diff'] = null;
     }
 } else {
     $response['successAuth'] = false;

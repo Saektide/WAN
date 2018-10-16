@@ -26,7 +26,9 @@ const i18n = {
         faq: 'FAQ',
         closedWiki: 'Closed wiki',
         closedWikiBody: 'Seems <a href="http://$1.wikia.com/">$1</a> is closed, we removed it of the list.',
-        newChanges: 'New changes at $1'
+        newChanges: 'New changes at $1',
+        missingWiki: 'Inexistent Wiki',
+        missingWikiBody: 'Seems $1 is an inexistent wiki, check the URL.'
     },
     es: {
         wanIsRunning: 'WAN está ejecutandose...',
@@ -47,6 +49,8 @@ const i18n = {
         faq: 'PMF',
         closedWiki: 'Wiki cerrado',
         closedWikiBody: 'Parece que <a href="http://$1.wikia.com/">$1</a> está cerrado, lo hemos eliminado de la lista.',
-        newChanges: 'Nuevos cambios en $1'
+        newChanges: 'Nuevos cambios en $1',
+        missingWiki: 'Wiki inexistente',
+        missingWikiBody: 'Parece que $1 es un wiki que no existe, comprueba el URL.'
     }
 }

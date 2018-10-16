@@ -9,6 +9,9 @@ class WAN {
      *
      */
     public function __construct() {
+        if ($_SERVER['HTTP_HOST'] == 'localhost') $onDevRelease = true;
+        else $onDevRelease = false;
+        
         include './classes/render.php';
     }
 }

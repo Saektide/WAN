@@ -33,7 +33,7 @@ include './classes/location.php';
                 sorry about this.
             </p>
         </div>
-        <?php if ($_SESSION['auth'] == true): ?>
+        <?php if ($_SESSION['auth'] == true or $onDevRelease): ?>
         <div id="modalfixed" class="modal modal-fixed-footer">
             <div class="modal-content">
             <h4></h4>
@@ -49,7 +49,11 @@ include './classes/location.php';
             <button id="whatisnew"><?= $i_WhatIsNew; ?></button>
             <button id="aboutwan"><?= $i_AboutWAN; ?></button>
             <button id="faq"><?= $i_FAQ; ?></button>
+            <?php if ($onDevRelease): ?>
+            <span class="username-min">Developer release</span>
+            <?php else: ?>
             <span class="username-min"><?= $_SESSION['username']; ?></span>
+            <?php endif; ?>
         </div>
         <div class="container">
             <h2><?= $i_Brand; ?></h2>
