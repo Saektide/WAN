@@ -24,7 +24,7 @@ class Wikia {
     static RC(w, func, err) {
         $.ajax({
             type: 'POST',
-            url: `./classes/wikia2.php?w=${w}`,
+            url: `./classes/fandom.php?w=${w}`,
             crossDomain: true,
             dataType: 'json',
         })
