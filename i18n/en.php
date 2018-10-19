@@ -4,7 +4,7 @@
 // ------------------------------
 // Language: English (en)
 
-$i_Brand = 'Wikia Activity Notifier';
+$i_Brand = 'Wiki Activity Notifier';
 $i_BrandMin = 'WAN';
 
 $i_WhatIsNew = 'What\'s New?';
