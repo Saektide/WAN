@@ -11,6 +11,15 @@ include './classes/location.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Wiki Activity Notifier, it's a webapp that notifies you about recent changes on a domain that has MediaWiki.">
     <title>Wiki Acitivity Notifier</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120921844-2"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-120921844-2');
+    </script>
     <!-- JQuery CDN -->
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
