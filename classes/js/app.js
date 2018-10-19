@@ -292,7 +292,7 @@ class IO {
         console.log('WAN IS NOW START TO MONITORING TARGERED WIKIS')
         let intRC = setInterval(()=>{
             if (wan.wikis.length === 0) return;
-            Wikia.RC(wan.wikis.join('|'), (raw)=>{
+            MW.RC(wan.wikis.join('|'), (raw)=>{
                 Object.keys(raw.wikisRC).forEach(wiki => {
                     let ROOT = raw.wikisRC[wiki].rc;
                     let DIFF;
