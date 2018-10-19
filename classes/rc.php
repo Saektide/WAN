@@ -11,7 +11,9 @@ header('Access-Control-Allow-Origin: *'); // For CORS policy.
  * @param string $userAgent The User-Agent to be used for this request.
  */
 function r__($d, $userAgent) {
-    $url = 'http://'.$d.'.wikia.com/api.php';
+
+    $url = 'http://'.$d.'/api.php';
+    
     $data = array(
         'action'  => 'query',
         'list'    => 'recentchanges',
@@ -44,7 +46,7 @@ function r__($d, $userAgent) {
  * @param number $revid Current revision id
  */
 function diff__($d, $userAgent, $oldrevid, $revid) {
-    $url = 'http://'.$d.'.wikia.com/api.php';
+    $url = 'http://'.$d.'/api.php';
     $data = array(
         'action'  => 'compare',
         'fromrev' => $oldrevid,
@@ -67,12 +69,13 @@ function diff__($d, $userAgent, $oldrevid, $revid) {
 }
 
 /**
- * Get the Mercury - Site data
- * 
- * @param string $d The interwiki domain
+ * Get metainfo about site.
+ *
+ * @param string $d The domain
+ * @return void
  */
-function m__($d) {
-    $url = 'http://'.$d.'.wikia.com/api/v1/Mercury/WikiVariables';
+function meta__($d) {
+    $url = 'http://'.$d.'/api.php?action=query&meta=siteinfo&format=json';
 
     $result = file_get_contents($url);
 
@@ -82,7 +85,7 @@ function m__($d) {
 $response = array(); // Here starts for JSON response.
 
 $w = $_GET['w']; // Get "w" param
-$UA = 'Wikia Activity Notifier (saektide.com/wan) by LemonSaektide'; // Default User-Agent
+$UA = 'Wiki Activity Notifier (saektide.com/wan) by LemonSaektide'; // Default User-Agent
 $wikis = explode('|', $w); // Split $w for get wikis, example: ?w=ut|terraria|c
 $response['wikisList'] = $wikis; // Append wikis in a single list
 
@@ -91,7 +94,7 @@ if ($_SESSION['auth']) { // API will be responds for authed users
     // First time, doesn't require the r__ function.
     foreach ($wikis as $wiki) {
 
-        $url = 'http://'.$wiki.'.wikia.com/api.php';
+        $url = 'http://'.$wiki.'/api.php';
         $data = array(
             'action'  => 'query',
             'list'    => 'recentchanges',
@@ -142,11 +145,11 @@ if ($_SESSION['auth']) { // API will be responds for authed users
             if ($redirectMatch) $diffResult = diff__($redirectMatch[2][0], $UA, $oldRevID, $revID);
             else $diffResult = diff__($wiki, $UA, $oldRevID, $revID);
         }
-        // Get Mercury (just siteName)
-        if ($redirectMatch) $mercuryResult = m__($redirectMatch[2][0]);
-        else $mercuryResult = m__($wiki);
+        // Get metainfo
+        if ($redirectMatch) $metaResult = meta__($redirectMatch[2][0]);
+        else $metaResult = meta__($wiki);
 
-        $response['wikisRC'][$wiki]['siteName'] = json_decode($mercuryResult)->data->siteName;
+        $response['wikisRC'][$wiki]['siteName'] = json_decode($metaResult)->query->general->sitename;
         if (json_decode($result)->query->recentchanges[0]->type == 'edit') $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
         else $response['wikisRC'][$wiki]['diff'] = null;
     }

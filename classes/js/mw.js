@@ -1,16 +1,16 @@
 /**
- * Wikia IO/requests controller. This class is static.
+ * MW IO/requests controller. This class is static.
  * 
- * @class Wikia
+ * @class MW
  */
-class Wikia {
+class MW {
     /**
      * User will be warned for invoke this class.
      * 
      * @constructor
      */
     constructor() {
-        return console.warn('Wikia is a static class!');
+        return console.warn('MW is a static class!');
     }
 
     /**
@@ -24,7 +24,7 @@ class Wikia {
     static RC(w, func, err) {
         $.ajax({
             type: 'POST',
-            url: `./classes/fandom.php?w=${w}`,
+            url: `./classes/rc.php?w=${w}`,
             crossDomain: true,
             dataType: 'json',
         })

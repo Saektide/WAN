@@ -1,3 +1,21 @@
-<form action="#" class="addwikiform">
-    <input type="text" name="domain" placeholder="community" required>
-</form>
+<ul id="hostSelection" class="tabs tabs-fixed-width">
+    <li class="tab col s3"><a class="active" href="#add-fandom-domain">FANDOM</a></li>
+    <li class="tab col s3"><a href="#add-other-domain">Other host</a></li>
+</ul>
+<div id="add-fandom-domain" class="col s12 host-selection">
+    <form action="#" class="addwikiform-wikia">
+        <p>You just need type the "interwiki". Example:
+            for <b>https://<u>undertale</u>.wikia.com</b> is just <b>undertale</b>
+        </p>
+        <input type="text" name="domain" placeholder="community" required>
+    </form>
+</div>
+<div id="add-other-domain" class="col s12 host-selection">
+    <form action="#" class="addwikiform-other">
+        <p>API.php must be in the main directory of domain. Example:
+            <b>Runescape Wiki</b>'s API is at <b>https://runescape.wiki/api.php</b>. Just type the
+            domain w/o HTTP protocol (http://).
+        </p>
+        <input type="text" name="domain" placeholder="my-wiki.com" required>
+    </form>
+</div>

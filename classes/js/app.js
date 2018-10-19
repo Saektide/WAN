@@ -74,23 +74,35 @@ class Modal {
         .modal()
         .modal('open')
 
-        $('.addwikiform').submit(e=>{
+        if (action == 'addWiki') $('ul#hostSelection').tabs();
+
+        $('.addwikiform-wikia')
+        .submit(e=>{
             e.preventDefault();
-            this.direct(action);
+            this.direct(action, {type: 'fandom'});
+        })
+
+        $('.addwikiform-other')
+        .submit(e=>{
+            e.preventDefault();
+            this.direct(action, {type: 'other'});
         })
 
         $('#modalfixed .modal-action.modal-close').click(e=>{
-            this.direct(action);
+            $('#modalfixed.modal')
+            .modal('close')
         })
     }
-    direct(action) {
+    direct(action, options = null) {
         // Action switch
         switch(action) {
             case 'addWiki':
                 console.log('Adding wiki via modal')
-                let wDom = $('.addwikiform [name="domain"]').val();
+                let wDom = $('.host-selection.active [name="domain"]').val();
                 if (wDom.length === 0) return;
-                new Wiki(wDom);
+
+                if (options.type == 'fandom') new Wiki(`${wDom}.wikia.com`);
+                else if (options.type == 'other') new Wiki(wDom);
             break;
         }
         // Then
@@ -245,9 +257,9 @@ class Wiki {
         if (Boolean(displaytitle.match(/@comment-/g))) displaytitle = i18n[wan.preferedLang].aMessage;
 
         $(`${c} .sitename-wiki`).text(sitename);
-        $(`${x} .lastrc > .lasttitle`).html(`<a href="http://${w}.wikia.com/wiki/${title}" target="_blank">${displaytitle}</a>`);
+        $(`${x} .lastrc > .lasttitle`).html(`<a href="http://${w}/${title}" target="_blank">${displaytitle}</a>`);
         $(`${x} .lastrc > .lastuser > a`).text(user);
-        $(`${x} .lastrc > .lastuser > a`).attr('href', `http://${w}.wikia.com/wiki/User:${user}`)
+        $(`${x} .lastrc > .lastuser > a`).attr('href', `http://${w}/User:${user}`)
         $(`${x} .lastrc > .lasttype`).text(type);
         $(`${x} .lastsumm span`).text(summary);
         $(`${x} .lastdiff table`).html(diff);
@@ -406,7 +418,7 @@ window.onload = function() {
     if (location.hostname != 'localhost') {
         if (location.protocol != 'https:') {
             new Modal(
-                'Wikia Activity Notifier',
+                'Wiki Activity Notifier',
                 i18n[wan.preferedLang].redirectingToHTTPS
             );
             setTimeout(()=>{
