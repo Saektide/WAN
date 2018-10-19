@@ -127,7 +127,7 @@ if ($_SESSION['auth']) { // API will be responds for authed users
         if ($responseMatch[1][0] == '301') {
             // 301 means for permanent redirect
             $response['wikisRC'][$wiki]['from'] = $wiki;
-            preg_match('/Location: http(s)?:\/\/(.*).wikia.com\/api.php/', $http_response_header[6], $redirectMatch, PREG_OFFSET_CAPTURE);
+            preg_match('/Location: http(s)?:\/\/(.*)\/api.php/', $http_response_header[6], $redirectMatch, PREG_OFFSET_CAPTURE);
             $response['wikisRC'][$wiki]['to'] = $redirectMatch[2][0];
 
             $result = r__($redirectMatch[2][0], $UA);
