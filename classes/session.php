@@ -21,13 +21,8 @@ else $onDevRelease = false;
 
 if ($onDevRelease) $_SESSION['auth'] = true;
 
-/**
- * "action" is used as an API Session.
- * 
- * @var string
- */
-
-$action = $_POST['action'];
+if (isset($_POST['action'])) $action = $_POST['action'];
+else $action = null;
 
 if ($action == 'destroy') {
     session_unset();
