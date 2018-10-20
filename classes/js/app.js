@@ -329,6 +329,8 @@ class IO {
                     if (!DIFF) {
                         DIFF = null;
                     }
+                    // Verify if it was redirected
+                    if (raw.wikisRC[wiki].from) wiki = raw.wikisRC[wiki].from;
                     // New wiki
                     if (!wan.lastRC[wiki]) {
                         Wiki.updateInfo(wan.wikis.indexOf(wiki),

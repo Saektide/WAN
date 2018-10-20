@@ -151,6 +151,7 @@ if ($_SESSION['auth']) { // API will be responds for authed users
             // 301 means for permanent redirect
             preg_match('/Location: http(s)?:\/\/(.*)\/api.php/', $http_response_header[6], $redirectMatch, PREG_OFFSET_CAPTURE);
             array_push($verified, $redirectMatch[2][0]);
+            $response['wikisRC'][$redirectMatch[2][0]]['from'] = $wiki;
         } else array_push($verified, $wiki);
     }
 
