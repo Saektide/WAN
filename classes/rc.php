@@ -2,6 +2,7 @@
 header('Content-type: application/json;charset=utf-8'); // Set for JSON content.
 error_reporting(0); // For warnings and notices.
 include_once('./session.php'); // For auth session
+include_once('./util.php');
 header('Access-Control-Allow-Origin: *'); // For CORS policy.
 
 /**
@@ -11,8 +12,10 @@ header('Access-Control-Allow-Origin: *'); // For CORS policy.
  * @param string $userAgent The User-Agent to be used for this request.
  */
 function r__($d, $userAgent) {
+    if (endsWith($d, '.wikia.com')) $protocol = 'http';
+    else $protocol = 'https';
 
-    $url = 'http://'.$d.'/api.php';
+    $url = $protocol.'://'.$d.'/api.php';
     
     $data = array(
         'action'  => 'query',
@@ -46,7 +49,10 @@ function r__($d, $userAgent) {
  * @param number $revid Current revision id
  */
 function diff__($d, $userAgent, $oldrevid, $revid) {
-    $url = 'http://'.$d.'/api.php';
+    if (endsWith($d, '.wikia.com')) $protocol = 'http';
+    else $protocol = 'https';
+
+    $url = $protocol.'://'.$d.'/api.php';
     $data = array(
         'action'  => 'compare',
         'fromrev' => $oldrevid,
@@ -75,7 +81,10 @@ function diff__($d, $userAgent, $oldrevid, $revid) {
  * @return void
  */
 function meta__($d) {
-    $url = 'http://'.$d.'/api.php?action=query&meta=siteinfo&format=json';
+    if (endsWith($d, '.wikia.com')) $protocol = 'http';
+    else $protocol = 'https';
+
+    $url = $protocol.'://'.$d.'/api.php?action=query&meta=siteinfo&format=json';
 
     $result = file_get_contents($url);
 
@@ -93,8 +102,10 @@ if ($_SESSION['auth']) { // API will be responds for authed users
     $response['successAuth'] = true;
     // First time, doesn't require the r__ function.
     foreach ($wikis as $wiki) {
+        if (endsWith($wiki, '.wikia.com')) $protocol = 'http';
+        else $protocol = 'https';
 
-        $url = 'http://'.$wiki.'/api.php';
+        $url = $protocol.'://'.$wiki.'/api.php';
         $data = array(
             'action'  => 'query',
             'list'    => 'recentchanges',
