@@ -455,6 +455,12 @@ window.onload = function() {
         }
     },1000)
 
+    $(".open-wan-menu").sideNav({
+        closeOnClick: true,
+        draggable: true,
+      }
+    );
+
     IO.start(); // Start!
     Materialize.toast(i18n[wan.preferedLang].welcome, 3000, 'rounded')
 

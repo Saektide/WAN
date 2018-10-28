@@ -355,7 +355,40 @@ ul.faq .q {
 span.username-min {
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+}
+
+span.username-min > .open-wan-menu {
+    margin-left: 10px;
+    color: #333;
+}
+
+#wan-menu .user-view {
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#wan-menu .user-view .name {
+    margin: 0;
+}
+
+#wan-menu > li i.material-icons {
+    transition: .4s;
+}
+
+#wan-menu > li:hover a {
+    color: #00a9de;
+    filter: none;
+    background-color: #f5fbff;
+}
+
+#wan-menu > li:hover i.material-icons {
+    color: #00a9de;
 }
 
 @media only screen and (max-width: 320px) {

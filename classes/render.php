@@ -55,24 +55,37 @@ include './classes/location.php';
         <!-- Main -->
         <div class="navbar">
             <span class="brand-min"><?= $i_BrandMin; ?></span>
-            <button id="whatisnew"><?= $i_WhatIsNew; ?></button>
-            <button id="aboutwan"><?= $i_AboutWAN; ?></button>
-            <button id="faq"><?= $i_FAQ; ?></button>
+            <span class="username-min">
             <?php if ($onDevRelease): ?>
-            <span class="username-min">Developer release</span>
+            Developer release
             <?php else: ?>
-            <span class="username-min"><?= $_SESSION['username']; ?></span>
+            <?= $_SESSION['username']; ?>
             <?php endif; ?>
+            <a href="#" data-activates="wan-menu" class="open-wan-menu"><i class="material-icons">menu</i></a>
+            </span>
         </div>
         <div class="container">
             <h2><?= $i_Brand; ?></h2>
-            <div class="actionbuttons">
-            <button id="addwiki"><?= $i_AddWiki; ?></button>
-            </div>
             <ul class="wikislist collapsible" data-collapsible="expandable">
             </ul>
         </div>
-        
+        <!-- Sidenav -->
+        <ul id="wan-menu" class="side-nav">
+            <li><div class="user-view">
+            <span class="name">
+            <?php if ($onDevRelease): ?>
+            WAN
+            <?php else: ?>
+            <?= $_SESSION['username']; ?>
+            <?php endif; ?>
+            </span>
+            </div></li>
+            <li><a class="waves-effect" href="#!" id="addwiki"><i class="material-icons">add</i><?= $i_AddWiki; ?></a></li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="#!" id="whatisnew"><i class="material-icons">update</i><?= $i_WhatIsNew; ?></a></li>
+            <li><a class="waves-effect" href="#!" id="aboutwan"><i class="material-icons">info</i><?= $i_AboutWAN; ?></a></li>
+            <li><a class="waves-effect" href="#!" id="faq"><i class="material-icons">help</i><?= $i_FAQ; ?></a></li>
+        </ul>
         <?php else: ?>
         <div class="unauthed">
             <?php if (isset($_GET['failed'])): ?>
