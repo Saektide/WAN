@@ -458,6 +458,7 @@ window.onload = function() {
     $(".open-wan-menu").sideNav({
         closeOnClick: true,
         draggable: true,
+        edge: 'right'
       }
     );
 
