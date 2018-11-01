@@ -35,13 +35,6 @@ include './classes/location.php';
 <body>
     <div class="app" id="wan">
         <!-- Misc -->
-        <div class="unsupportscreensize">
-            <h2>Oops!</h2>
-            <p>Seems this is a unsupportable screen size (320px)
-                this page isn't yet for ultra-smaller devices. We're
-                sorry about this.
-            </p>
-        </div>
         <?php if ($_SESSION['auth'] == true or $onDevRelease): ?>
         <div id="modalfixed" class="modal modal-fixed-footer">
             <div class="modal-content">

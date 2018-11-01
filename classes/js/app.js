@@ -17,7 +17,6 @@ if (!AUTH_STATUS) {
  * @type {object}
  * @property {boolean} statusFocus Indicates the current status of tab/window.
  * @property {boolean} isNotifyAllowed Indicates the current status of notifies (allowed or not).
- * @property {boolean} rememberedNotifies Indicates if user was warned about notifies.
  * @property {array} wikis Wikis will be listed here.
  * @property {object} lastRC WikisRC will be stored here.
  * @property {number} MAX_WIKIS_NUMBER (UPPERCASED var) is the max. number of wikis that can
@@ -26,7 +25,6 @@ if (!AUTH_STATUS) {
 var wan = {
     statusFocus: false,
     isNotifyAllowed: false,
-    rememberedNotifies: false,
     wikis: [],
     lastRC: {},
     MAX_WIKIS_NUMBER: 5
@@ -44,10 +42,6 @@ $(window).focus(function(){
     wan.statusFocus = true;
 }).blur(function(){
     wan.statusFocus = false;
-    if (!wan.rememberedNotifies && wan.isNotifyAllowed) {
-        new Notification(i18n[wan.preferedLang].wanIsRunning, {body: i18n[wan.preferedLang].wanIsRunning2});
-        wan.rememberedNotifies = true;
-    }
 })
 
 /**

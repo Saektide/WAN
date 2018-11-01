@@ -391,8 +391,9 @@ span.username-min > .open-wan-menu {
     color: #00a9de;
 }
 
-@media only screen and (max-width: 320px) {
-    .unsupportscreensize {
-        display: block;
+@media only screen and (max-width: 425px) {
+    .unauthed {
+        width: 95%;
+        padding: 20px 5px;
     }
 }
