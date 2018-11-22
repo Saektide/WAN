@@ -1,0 +1,116 @@
+body {
+    background: #232323;
+}
+
+.navbar {
+    background: #232323;
+    border-bottom-color: #3c3c3c;
+    color: #ececec;
+}
+
+span.username-min > .open-wan-menu {
+    color: #fff;
+}
+
+.collapsible {
+    border-color: #3c3c3c;
+}
+
+.collapsible-header {
+    background: #151515;
+    border-bottom-color: #3c3c3c;
+}
+
+.collapsible-body {
+    background: #151515 !important;
+    border-bottom-color: #3c3c3c;
+}
+
+.wikislist li .collapsible-header .favicon-wiki {
+    border-right-color: #3c3c3c;
+}
+
+.wikislist li .collapsible-header.active .sitename-wiki {
+    color: #fff;
+}
+
+.wikislist li .collapsible-header .sitename-wiki {
+    color: #888;
+}
+
+.wikirc > h3 {
+    border-bottom-color: #3c3c3c;
+    color: #eee;
+}
+
+h3.lastrc .lastuser {
+    border-left-color: #3c3c3c;
+}
+
+.wikislist li .details .collapsible-header {
+    color: #eee;
+}
+
+.lastsumm {
+    color: #eee;
+}
+
+.lastdiff > table .diff-lineno {
+    border-bottom-color: #3c3c3c;
+    color: #969696;
+    font-weight: 400;
+}
+
+.lastdiff > table .diff-context {
+    color: #ababab;
+}
+
+.lastdiff > table .diff-deletedline {
+    background: #441818;
+    color: #fff;
+    border-bottom-color: #151515;
+}
+
+.lastdiff > table .diff-addedline {
+    border-bottom-color: #151515;
+    background: #183e44;
+    color: #fff;
+}
+
+.lastdiff > table ins {
+    background: #306f79;
+}
+
+.lastdiff > table del {
+    background: #732e2e;
+}
+
+.btn {
+    border-color: #252525;
+}
+
+.rc-actions #blockuser {
+    color: #ff6f6f;
+}
+
+#wan-menu .user-view {
+    background: #353535;
+    color: #eee;
+}
+
+.side-nav {
+    background: #252525;
+}
+
+.side-nav .divider {
+    background-color: #353535;
+}
+
+.side-nav li > a,
+.side-nav li>a i.material-icons {
+    color: #eee;
+}
+
+#wan-menu > li:hover a {
+    background-color: #2e2e2e;
+}

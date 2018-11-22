@@ -1,0 +1,68 @@
+<div class="blockuser" data-site="$1" data-user="$2">
+    <ul id="blockOptions" class="tabs tabs-fixed-width">
+        <li class="tab col s3"><a class="active" href="#quick-block-vandalism">Vandalism</a></li>
+        <li class="tab col s3"><a href="#quick-block-spam">Spam</a></li>
+        <li class="tab col s3"><a href="#quick-block-sockpuppet">Sock</a></li>
+        <li class="tab col s3"><a href="#quick-block-manual">Other</a></li>
+    </ul>
+    <div id="quick-block-vandalism" class="col s12 block-options">
+        <ul class="collection">
+            <li class="collection-item">User: $2</li>
+            <li class="collection-item">Time expiry: never</li>
+            <li class="collection-item">Reason: Vandalism</li>
+        </ul>
+        <form action="#" class="blockuser">
+            <input type="hidden" id="expiry" value="never">
+            <input type="hidden" id="reason" value="[[Help:Vandalism|Vandalism]]">
+            <a type="submit" class="waves-effect red waves-light btn" id="process-blockuser" data-site="$1" data-block="vandalism">
+                <i class="material-icons left">done</i>Block $2
+            </a>
+        </form>
+    </div>
+    <div id="quick-block-spam" class="col s12 block-options">
+        <ul class="collection">
+            <li class="collection-item">User: $2</li>
+            <li class="collection-item">Time expiry: 3 months</li>
+            <li class="collection-item">Reason: Spam</li>
+        </ul>
+        <form action="#" class="blockuser">
+            <input type="hidden" id="expiry" value="3 months">
+            <input type="hidden" id="reason" value="[[Help:Spam|Spam]]">
+            <a type="submit" class="waves-effect red waves-light btn" id="process-blockuser" data-site="$1" data-block="spam">
+                <i class="material-icons left">done</i>Block $2
+            </a>
+        </form>
+    </div>
+    <div id="quick-block-sockpuppet" class="col s12 block-options">
+        <ul class="collection">
+            <li class="collection-item">User: $2</li>
+            <li class="collection-item">Time expiry: 1 year</li>
+            <li class="collection-item">Reason: Sockpuppet</li>
+        </ul>
+        <form action="#" class="blockuser">
+            <input type="hidden" id="expiry" value="1 year">
+            <input type="hidden" id="reason" value="[[Help:Sockpuppet|Sockpuppet]]">
+            <a type="submit" class="waves-effect red waves-light btn" id="process-blockuser" data-site="$1" data-block="sockpuppet">
+                <i class="material-icons left">done</i>Block $2
+            </a>
+        </form>
+    </div>
+    <div id="quick-block-manual" class="col s12 block-options">
+        <form action="#" class="blockuser">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="block-expiry" type="text" required>
+                    <label for="block-expiry">Expiry time</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="block-reason" type="text" required>
+                    <label for="block-reason">Reason</label>
+                </div>
+            </div>
+            <a type="submit" class="waves-effect red waves-light btn" id="process-blockuser" data-site="$1" data-block="sockpuppet">
+                <i class="material-icons left">done</i>Block $2
+            </a>
+        </form>
+    </div>
+    
+</div>

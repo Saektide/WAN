@@ -42,7 +42,7 @@ include './classes/location.php';
             <p></p>
             </div>
             <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">OK</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat"><?= $i_Close ?></a>
             </div>
         </div>
         <!-- Main -->
@@ -58,7 +58,6 @@ include './classes/location.php';
             </span>
         </div>
         <div class="container">
-            <h2><?= $i_Brand; ?></h2>
             <ul class="wikislist collapsible" data-collapsible="expandable">
             </ul>
         </div>
@@ -73,11 +72,12 @@ include './classes/location.php';
             <?php endif; ?>
             </span>
             </div></li>
-            <li><a class="waves-effect" href="#!" id="addwiki"><i class="material-icons">add</i><?= $i_AddWiki; ?></a></li>
+            <li><a class="waves-effect" href="#" id="addwiki"><i class="material-icons">add</i><?= $i_AddWiki; ?></a></li>
             <li><div class="divider"></div></li>
-            <li><a class="waves-effect" href="#!" id="whatisnew"><i class="material-icons">update</i><?= $i_WhatIsNew; ?></a></li>
-            <li><a class="waves-effect" href="#!" id="aboutwan"><i class="material-icons">info</i><?= $i_AboutWAN; ?></a></li>
-            <li><a class="waves-effect" href="#!" id="faq"><i class="material-icons">help</i><?= $i_FAQ; ?></a></li>
+            <li><a class="waves-effect" href="#" id="wansettings"><i class="material-icons">settings</i><?= $i_Settings; ?></a></li>
+            <li><a class="waves-effect" href="#" id="whatisnew"><i class="material-icons">update</i><?= $i_WhatIsNew; ?></a></li>
+            <li><a class="waves-effect" href="#" id="aboutwan"><i class="material-icons">info</i><?= $i_AboutWAN; ?></a></li>
+            <li><a class="waves-effect" href="#" id="faq"><i class="material-icons">help</i><?= $i_FAQ; ?></a></li>
         </ul>
         <?php else: ?>
         <div class="unauthed">

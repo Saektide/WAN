@@ -18,7 +18,7 @@ html {
 
 body {
     margin: 0;
-    background: #e4e4e4;
+    background: #f9f9f9;
 }
 
 body a {
@@ -33,8 +33,8 @@ body a:hover {
 
 .navbar {
     background: #f9f9f9;
+    border-bottom: 1px solid #eee;
     padding: 15px;
-    box-shadow: 0 0 7px rgba(0,0,0,.4);
     color: #2d2d2d;
     position: fixed;
     left: 0;
@@ -73,6 +73,11 @@ body a:hover {
     font-weight: 700;
     text-align: center;
     font-size: 30pt;
+}
+
+.modal {
+    box-shadow: none;
+    border-radius: 15px;
 }
 
 .modal h1, .modal h2, .modal h3, .modal h4 {
@@ -120,8 +125,8 @@ button#closemodal:hover {
 }
 
 .wikislist {
-    border-top: 1px solid #d6d6d6;
     margin-top: 10px;
+    box-shadow: none;
 }
 
 .wikislist li .collapsible-header {
@@ -291,22 +296,22 @@ ul.faq .q {
     text-decoration: none;
 }
 
-/* Host selection */
+/* Style tabs */
 
-#hostSelection {
+ul.tabs {
     background: transparent;
 }
 
-#hostSelection > li.indicator {
+ul.tabs > li.indicator {
     background: #3ac7e0;
 }
 
-#hostSelection > li.tab > a {
-    color: #86c5d0;
+ul.tabs > li.tab > a {
+    color: #86c5d0 !important;
 }
 
-#hostSelection > li.tab > a.active {
-    color: #3ac7e0;
+ul.tabs > li.tab > a.active {
+    color: #3ac7e0 !important;
 }
 
 /* For smaller devices */
@@ -389,6 +394,64 @@ span.username-min > .open-wan-menu {
 
 #wan-menu > li:hover i.material-icons {
     color: #00a9de;
+}
+
+.warn-login {
+    background: #eee7ff;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.warn-login > .icon {
+    margin-right: 10px;
+    color: #a57fff;
+    padding: 5px 0 5px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: #60ceff;
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+    border: 0;
+}
+
+[type="radio"]:not(:checked)+label:before, [type="radio"]:not(:checked)+label:after {
+    border: 1px solid #dcdcdc;
+}
+
+[type="radio"]+label:hover {
+    color: #191919;
+}
+
+.btn {
+    box-shadow: none !important;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: none !important;
+    color: #a5a5a5;
+    height: auto;
+    padding: 9px 20px;
+    line-height: normal;
+    font-family: 'GSans R';
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.modal #appSettings h2 {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+}
+
+.side-nav .divider {
+    margin: 0;
 }
 
 @media only screen and (max-width: 425px) {

@@ -1,0 +1,41 @@
+body {
+    background: #f6f6f6;
+}
+
+body a {
+    color: #00d6d6;
+}
+
+.navbar {
+    background: #002a32;
+    border-bottom: 0;
+    color: #00d6d6;
+}
+
+.navbar a i.material-icons {
+    color: #ff6a64;
+}
+
+button#removewiki {
+    background: #ff6a64;
+    border: 0;
+}
+
+#wan-menu .user-view {
+    background: #0c3d46;
+    color: #00d6d6;
+    font-family: 'GSans B';
+}
+
+#wan-menu > li:hover a {
+    color: #00d6d6;
+    background-color: #e5ffff;
+}
+
+#wan-menu > li:hover i.material-icons {
+    color: #00d6d6;
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: #5fe6e6;
+}

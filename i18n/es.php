@@ -10,8 +10,12 @@ $i_BrandMin = 'WAN';
 $i_WhatIsNew = 'Actualizaciones';
 $i_AboutWAN = 'Acerca de WAN';
 $i_FAQ = 'FAQ';
+$i_Settings = 'Ajustes';
 
 $i_AddWiki = 'Añadir wiki';
+$i_ManageWikiaAccount = 'Mis cuentas (FANDOM)';
+
+$i_Close = 'Cerrar';
 
 $i_unAuthedInfo = 'Oh, hola. Hemos actualizado la seguridad aquí. Puedes entrar solo si has recibido una clave de autenticación. ¿La tienes? Si deseas el acceso, deberías contactarte con Saektide (Saektide#4411 / saektide@saektide.com).';
 $i_unAuthedExit = 'No';

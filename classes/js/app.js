@@ -1,11 +1,5 @@
-// Remember: Don't change/modify/delete variable that looks UPPERCASED.
-/**
- * For "cheaters", AUTH_STATUS will be provided by PHP.
- * if it false, app.js will be auto-removed.
- * If it is't, app.js will be loaded, without returning any error.
- * 
- * Note: AUTH_STATUS is a const variable.
- */
+// Note: AUTH_STATUS is a const variable.
+
 if (!AUTH_STATUS) {
     $('script[src="./classes/js/app.js"]').remove();
     throw new Error('app.js :: Script file was injected but auth status is false! Removing script...');
@@ -68,7 +62,36 @@ class Modal {
         .modal()
         .modal('open')
 
+        // Tabs
         if (action == 'addWiki') $('ul#hostSelection').tabs();
+        if (action == 'blockUser') $('ul#blockOptions').tabs();
+
+        // Accounts
+        $('.addaccount-direct')
+        .click(e=>{
+            $('.addaccount-wikia').show();
+            $('.accounts-wikia').hide();
+        })
+        $('.addaccount-wikia')
+        .submit(e=>{
+            e.preventDefault();
+            let usr = $('.addaccount-wikia #usr').val(),
+                psw = $('.addaccount-wikia #psw').val();
+            IO.authToken(
+                usr,
+                psw
+            ).then(data=>{
+                if (data.result) {
+                    $('#modalfixed.modal')
+                    .modal('close');
+                    wan.token = data.result.access_token;
+                    Materialize.toast(i18n[wan.preferedLang].authedAs.replace(/\$1/g, usr), 3000, 'rounded')
+                } else {
+                    $('.addaccount-wikia #usr').val(null)
+                    $('.addaccount-wikia #psw').val(null)
+                }
+            })
+        })
 
         $('.addwikiform-wikia')
         .submit(e=>{
@@ -81,7 +104,21 @@ class Modal {
             e.preventDefault();
             this.direct(action, {type: 'other'});
         })
+        // Settings
+        // * Theme
+        $('form.theme-settings input[type="radio"][name="theme"]').change((e)=>{
+            Themes.change(e.target.id);
+        })
 
+        if (wan.currentTheme) {
+            $(`form.theme-settings input[type="radio"][name="theme"][id="${wan.currentTheme}"]`)
+            .attr('checked', true);
+        } else {
+            $(`form.theme-settings input[type="radio"][name="theme"][id="white"]`)
+            .attr('checked', true);
+        }
+
+        // Close button
         $('#modalfixed .modal-action.modal-close').click(e=>{
             $('#modalfixed.modal')
             .modal('close')
@@ -169,6 +206,18 @@ class Session {
             if (wan.wikis.length < wan.MAX_WIKIS_NUMBER) $('#addwiki').removeProp('disabled');
         });
     }
+
+    static getVar(varname) {
+        return new Promise((result, reject) => {
+            $.post('./classes/session.php',{action:'getVar', name: varname})
+            .done((data)=>{
+                return result(data);
+            })
+            .fail((err)=>{
+                return reject(err);
+            });
+        })
+    }
 }
 
 /**
@@ -198,6 +247,20 @@ class Wiki {
             Session.saveWiki(dom,(data)=>{
                 console.log(data);
             })
+
+            // Block button
+            $(`#blockuser[data-site="${dom}"]`).click(() => {
+                let mainEl = $(`#blockuser[data-site="${dom}"]`);
+                Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
+                $.post(`./classes/templates/${wan.preferedLang}/blockuser.html`).done(data=>{
+                    data = data.replace(/\$1/g, dom).replace(/\$2/g, $(mainEl).attr);
+                    new Modal(
+                        i18n[wan.preferedLang].blockuser,
+                        data,
+                        'blockUser'
+                    )
+                })
+            })
         })
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
@@ -217,6 +280,20 @@ class Wiki {
             $('.wikislist').append($.parseHTML(reElement));
 
             $(`.wikirc#${wan.wikis.indexOf(dom)} .details .collapsible`).collapsible()
+
+            // Block button
+            $(`#blockuser[data-site="${dom}"]`).click(() => {
+                let mainEl = $(`#blockuser[data-site="${dom}"]`);
+                Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
+                $.post(`./classes/templates/${wan.preferedLang}/blockuser.html`).done(data=>{
+                    data = data.replace(/\$1/g, dom).replace(/\$2/g, $(mainEl).attr('data-user'));
+                    new Modal(
+                        i18n[wan.preferedLang].blockuser,
+                        data,
+                        'blockUser'
+                    )
+                })
+            })
         })
         if (wan.wikis.length >= wan.MAX_WIKIS_NUMBER) $('#addwiki').prop('disabled', 'true');
     }
@@ -257,6 +334,7 @@ class Wiki {
         $(`${x} .lastrc > .lasttype`).text(type);
         $(`${x} .lastsumm span`).text(summary);
         $(`${x} .lastdiff table`).html(diff);
+        $(`${x} .rc-actions #blockuser`).attr('data-user', user);
 
         console.log(`Wiki #${id} RC Info has been updated!`);
     }
@@ -315,6 +393,8 @@ class IO {
                                     i18n[wan.preferedLang].missingWikiBody.replace(/\$1/g, wiki)
                                 )
                                 break;
+                            case null:
+                                return;
                         }
                         Wiki.remove(wiki);
                         return;
@@ -361,12 +441,84 @@ class IO {
             });
         },4000)
     }
+
+    static authToken(usr, psw) {
+        return new Promise((resolve, reject) => {
+            $.post('./classes/wikiaLogin.php', {
+                username: usr,
+                password: psw
+            }).done(a=>{
+                return resolve(a);
+            }).fail(e=>{
+                return reject(e);
+            });
+        })
+    }
+
+    static block(d, username, reason, time) {
+        return new Promise((resolve, reject) => {
+            $.post('./classes/mw/block.php', {
+                domain: d,
+                user: username,
+                reason: reason,
+                expire: time
+            }).done(a=>{
+                return resolve(a);
+            }).fail(e=>{
+                return reject(e);
+            });
+        })
+    }
+
+    static checkRights(d) {
+        return new Promise((resolve, reject) => {
+            $.get('./classes/mw/checkRights.php', {
+                domain: d
+            }).done(a=>{
+                return resolve(a);
+            }).fail(e=>{
+                return reject(e);
+            });
+        })
+    }
+}
+
+/**
+ * Customize WAN UI
+ * 
+ * @class Themes
+ */
+class Themes {
+    static change(v) {
+        if (v === 'white') Themes.removeCurrentTheme();
+        else {
+            Themes.removeCurrentTheme();
+            Themes.importTheme(v);
+            wan.currentTheme = v;
+        }
+    }
+
+    static importTheme(themename) {
+        $('<link/>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: `classes/style/themes/${themename}.css`,
+            id: 'currentTheme'
+        }).appendTo('head');
+    }
+
+    static removeCurrentTheme() {
+        if ($('#currentTheme').length > 0) {
+            $('#currentTheme').remove();
+            wan.currentTheme = null;
+        }
+    }
 }
 
 // Button actions
 
-$('#addwiki').click(function(){
-    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+$('#addwiki').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
 
     $.post(`./classes/templates/${wan.preferedLang}/addwikiform.html`).done(data=>{
         new Modal(
@@ -377,8 +529,8 @@ $('#addwiki').click(function(){
     })
 })
 
-$('#faq').click(function(){
-    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+$('#faq').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
 
     $.post(`./classes/templates/${wan.preferedLang}/faq.html`).done(data=>{
         new Modal(
@@ -388,8 +540,8 @@ $('#faq').click(function(){
     })
 })
 
-$('#whatisnew').click(function(){
-    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+$('#whatisnew').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
 
     $.post(`./classes/templates/${wan.preferedLang}/whatisnew.html`).done(data=>{
         new Modal(
@@ -399,13 +551,37 @@ $('#whatisnew').click(function(){
     })
 })
 
-$('#aboutwan').click(function(){
-    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog')
+$('#aboutwan').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
 
     $.post(`./classes/templates/${wan.preferedLang}/aboutwan.html`).done(data=>{
         new Modal(
             i18n[wan.preferedLang].aboutWAN,
             data
+        )
+    })
+})
+
+$('#addFANDOMaccount').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
+
+    $.post(`./classes/templates/${wan.preferedLang}/manageaccount.html`).done(data=>{
+        new Modal(
+            i18n[wan.preferedLang].manageWikiaAccount,
+            data,
+            'addWikiaAcount'
+        )
+    })
+})
+
+$('#wansettings').click(() => {
+    Materialize.toast(i18n[wan.preferedLang].loading, 3000, 'rounded loadingDialog');
+
+    $.post(`./classes/templates/${wan.preferedLang}/settings.html`).done(data=>{
+        new Modal(
+            i18n[wan.preferedLang].settings,
+            data,
+            'settings'
         )
     })
 })
@@ -424,8 +600,6 @@ window.onload = function() {
         }
     }
     
-
-
     let count = 0;
     wan.preWikis.forEach(wikiDom => {
         count++
@@ -460,4 +634,15 @@ window.onload = function() {
     Materialize.toast(i18n[wan.preferedLang].welcome, 3000, 'rounded')
 
     setTimeout(Modal.hide, 2000);
+
+    Session.getVar('token').then(data => {
+        if (!data.match(/Error/g)) {
+            wan.token = data.replace(/"/g, '');
+            console.log('Token found!');
+        }
+    });
+
+    Session.getVar('wikiauser').then(data => {
+        if (!data.match(/Error/g)) wan.wikiauser = data.replace(/"/g, '');
+    });
 }

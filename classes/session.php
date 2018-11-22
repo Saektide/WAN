@@ -48,6 +48,12 @@ if ($action == 'destroy') {
     if (isset($authkey)) {
         $_SESSION['auth_key'] = $authkey;
     }
+} elseif ($action == 'getVar') {
+    if (isset($_POST['name'])) $varname = $_POST['name'];
+    else die('Error: Varname no provided!');
+
+    if (isset($_SESSION[$varname])) echo json_encode($_SESSION[$varname]);
+    else die('Error: Session var no found!');
 }
 
 ?>
