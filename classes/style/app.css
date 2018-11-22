@@ -454,6 +454,18 @@ span.username-min > .open-wan-menu {
     margin: 0;
 }
 
+/* for unauth page */
+
+.unauthed-actions-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.unauthed-actions-buttons button {
+    border: 1px solid #d6d6d6;
+    color: #6b6b6b;
+}
+
 @media only screen and (max-width: 425px) {
     .unauthed {
         width: 95%;
