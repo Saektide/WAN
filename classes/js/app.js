@@ -146,6 +146,7 @@ class Modal {
         // Then
         $('#modalfixed.modal')
         .modal('close')
+        $('.modal-overlay').hide();
     }
     /**
      * Hides the invoked modal
