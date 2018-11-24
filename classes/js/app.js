@@ -59,8 +59,12 @@ class Modal {
         if ($('.loadingDialog').first()[0]) $('.loadingDialog').first()[0].M_Toast.remove();
         
         $('#modalfixed.modal')
-        .modal()
-        .modal('open')
+        .modal({
+            complete: function() {
+                if (action) Modal.direct(action);
+            }
+        })
+        .modal('open');
 
         // Tabs
         if (action == 'addWiki') $('ul#hostSelection').tabs();
@@ -96,13 +100,13 @@ class Modal {
         $('.addwikiform-wikia')
         .submit(e=>{
             e.preventDefault();
-            this.direct(action, {type: 'fandom'});
+            Modal.direct(action, {type: 'fandom'});
         })
 
         $('.addwikiform-other')
         .submit(e=>{
             e.preventDefault();
-            this.direct(action, {type: 'other'});
+            Modal.direct(action, {type: 'other'});
         })
         // Settings
         // * Theme
@@ -121,10 +125,10 @@ class Modal {
         // Close button
         $('#modalfixed .modal-action.modal-close').click(e=>{
             $('#modalfixed.modal')
-            .modal('close')
+            .modal('close');
         })
     }
-    direct(action, options = null) {
+    static direct(action, options = null) {
         // Action switch
         switch(action) {
             case 'addWiki':
@@ -134,6 +138,9 @@ class Modal {
 
                 if (options.type == 'fandom') new Wiki(`${wDom}.wikia.com`);
                 else if (options.type == 'other') new Wiki(wDom);
+            break;
+            case 'settings':
+                Session.saveTheme($('form.theme-settings input[type="radio"][name="theme"]:checked').attr('id'));
             break;
         }
         // Then
@@ -211,6 +218,19 @@ class Session {
         return new Promise((result, reject) => {
             $.post('./classes/session.php',{action:'getVar', name: varname})
             .done((data)=>{
+                return result(data);
+            })
+            .fail((err)=>{
+                return reject(err);
+            });
+        })
+    }
+
+    static saveTheme(n) {
+        return new Promise((result, reject) => {
+            $.post('./classes/session.php',{action:'saveTheme', name: n})
+            .done((data)=>{
+                console.log(data);
                 return result(data);
             })
             .fail((err)=>{
@@ -586,6 +606,12 @@ $('#wansettings').click(() => {
     })
 })
 
+$('#logout').click(() => {
+    Session.destroySession(()=>{
+        location.reload();
+    });
+})
+
 window.onload = function() {
     if (location.hostname != 'localhost') {
         if (location.protocol != 'https:') {
@@ -645,4 +671,11 @@ window.onload = function() {
     Session.getVar('wikiauser').then(data => {
         if (!data.match(/Error/g)) wan.wikiauser = data.replace(/"/g, '');
     });
+
+    Session.getVar('theme').then(data => {
+        if (!data.match(/Error/g)) wan.currentTheme = data.replace(/"/g, '');
+        else wan.currentTheme = null;
+
+        if (wan.currentTheme != (null || 'white')) Themes.change(wan.currentTheme);
+    })
 }

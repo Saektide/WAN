@@ -16,7 +16,9 @@ if (!$_SESSION['auth']) {
     $_SESSION['auth'] = false;
 }
 
-if ($_SERVER['HTTP_HOST'] == 'localhost') $onDevRelease = true;
+preg_match('/localhost(:8080)?/', $_SERVER['HTTP_HOST'], $matchHost);
+$allowedLocalhosts = array('localhost', 'localhost:8080');
+if (in_array($matchHost[0], $allowedLocalhosts)) $onDevRelease = true;
 else $onDevRelease = false;
 
 if ($onDevRelease) $_SESSION['auth'] = true;
@@ -54,6 +56,9 @@ if ($action == 'destroy') {
 
     if (isset($_SESSION[$varname])) echo json_encode($_SESSION[$varname]);
     else die('Error: Session var no found!');
+} elseif ($action == 'saveTheme') {
+    if (isset($_POST['name'])) $_SESSION['theme'] = $_POST['name'];
+    else die('Error: Theme name not specified!');
 }
 
 ?>

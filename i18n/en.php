@@ -11,15 +11,18 @@ $i_WhatIsNew = 'What\'s New?';
 $i_AboutWAN = 'About WAN';
 $i_FAQ = 'FAQ';
 $i_Settings = 'Settings';
+$i_Logout = 'Log out';
 
 $i_AddWiki = 'Add wiki';
-$i_ManageWikiaAccount = 'My accounts (FANDOM)';
 
 $i_Close = 'Close';
 
-$i_unAuthedInfo = 'Oh, hello. We just upgraded the security here. You can join only if you received an auth key. Do you have it? If you want access, you should contact to Saektide (Saektide#4411 / saektide@saektide.com).';
-$i_unAuthedExit = 'Nope';
-$i_unAuthedJoin = 'Yes';
+$i_unAuthedInfo = 'WAN is an open source project, auth keys is for avoid abuse. You can continue if you have an auth key. Abusing this service your IP and browser can be blacklisted in this site.';
+$i_unAuthedJoin = 'Continue';
 $i_unAuthedInvalid = 'Make sure it\'s a valid key.';
+$i_unAuthedFormTitle = 'Auth key';
+$i_unAuthedFormInfo = 'Please provide your auth key';
+$i_unAuthedFormAuth = 'Auth';
+$i_unAuthedFormSubmit = 'Join';
 
 ?>

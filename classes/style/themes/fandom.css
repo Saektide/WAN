@@ -39,3 +39,11 @@ button#removewiki {
 [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
     background-color: #5fe6e6;
 }
+
+ul.tabs > li.indicator {
+    background: #21cccc;
+}
+
+ul.tabs > li.tab > a.active {
+    color: #21cccc !important;
+}

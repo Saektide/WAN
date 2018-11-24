@@ -114,3 +114,40 @@ h3.lastrc .lastuser {
 #wan-menu > li:hover a {
     background-color: #2e2e2e;
 }
+
+.modal {
+    background: #292929 !important;
+    color: #fff !important;
+}
+
+.modal-content > h4, .modal #appSettings h2 {
+    border-bottom-color: #1f1f1f !important;
+}
+
+.modal .modal-footer {
+    background: #292929 !important;
+}
+
+.modal .modal-footer a {
+    color: #eee !important;
+}
+
+[type="radio"]:not(:checked)+label:before, [type="radio"]:not(:checked)+label:after {
+    border-color: #444 !important;
+}
+
+[type="radio"]+label:hover {
+    color: #fff !important;
+}
+
+ul.whatisnew > li {
+    border-color: #333 !important;
+}
+
+::-webkit-scrollbar {
+    background-color: #232323 !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #313131 !important;
+}

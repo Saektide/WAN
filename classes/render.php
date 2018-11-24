@@ -78,6 +78,7 @@ include './classes/location.php';
             <li><a class="waves-effect" href="#" id="whatisnew"><i class="material-icons">update</i><?= $i_WhatIsNew; ?></a></li>
             <li><a class="waves-effect" href="#" id="aboutwan"><i class="material-icons">info</i><?= $i_AboutWAN; ?></a></li>
             <li><a class="waves-effect" href="#" id="faq"><i class="material-icons">help</i><?= $i_FAQ; ?></a></li>
+            <li><a class="waves-effect" href="#" id="logout"><i class="material-icons">exit_to_app</i><?= $i_Logout; ?></a></li>
         </ul>
         <?php else: ?>
         <div class="unauthed">
@@ -86,23 +87,22 @@ include './classes/location.php';
             <?php endif;?>
             <p><?= $i_unAuthedInfo ?></p><br/>
             <div class="unauthed-actions-buttons">
-                <button id="app-exit" class="waves-effect waves-light btn"><?=$i_unAuthedExit; ?></button>
                 <button id="app-join" class="waves-effect waves-light btn modal-trigger" href="#appjoin"><?=$i_unAuthedJoin; ?></button>
             </div>
         </div>
         <!-- App-join module -->
         <div id="appjoin" class="modal">
             <div class="modal-content">
-            <h4>AUTH Key</h4>
-            <p>Please type your auth key.</p>
+            <h4><?= $i_unAuthedFormTitle ?></h4>
+            <p><?= $i_unAuthedFormInfo ?></p>
             <form action="#" id="appjoin-form" class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                    <input id="auth" type="password" class="validate" required>
-                    <label for="auth">Auth</label>
+                    <input id="auth" type="password" required>
+                    <label for="auth"><?= $i_unAuthedFormAuth ?></label>
                     </div>
                 </div>
-                <button href="#!" type="submit" id="appjoin-attemp" class="modal-action waves-effect waves-dark btn-flat">Join</button>
+                <button href="#!" type="submit" id="appjoin-attemp" class="modal-action waves-effect waves-dark btn-flat"><?= $i_unAuthedFormSubmit ?></button>
             </form>
             </div>
         </div>

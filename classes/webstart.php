@@ -9,7 +9,9 @@ class WAN {
      *
      */
     public function __construct() {
-        if ($_SERVER['HTTP_HOST'] == 'localhost') $onDevRelease = true;
+        preg_match('/localhost(:8080)?/', $_SERVER['HTTP_HOST'], $matchHost);
+        $allowedLocalhosts = array('localhost', 'localhost:8080');
+        if (in_array($matchHost[0], $allowedLocalhosts)) $onDevRelease = true;
         else $onDevRelease = false;
         
         include './classes/render.php';
