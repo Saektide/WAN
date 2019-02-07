@@ -106,14 +106,6 @@ function meta__($d, $userAgent) {
     return $result;
 }
 
-function getFANDOMuser__($user) {
-    $url = 'https://community.wikia.com/api/v1/User/Details?ids='.$user;
-
-    $result = file_get_contents($url);
-
-    return $result;
-}
-
 $response = array(); // Here starts for JSON response.
 
 $w = $_GET['w']; // Get "w" param
@@ -151,13 +143,13 @@ if ($_SESSION['auth']) { // API will be responds for authed users
          * Note:
          * 
          * $http_response_header[0] is the Status HTTP (404, 200, 410, 301, etc)
-         * $http_response_header[6] is the Location (if Status HTTP is 301)
+         * $http_response_header[5] is the Location (if Status HTTP is 301)
          */
 
         preg_match('/HTTP\/1.1 (.*?) /', $http_response_header[0], $responseMatch, PREG_OFFSET_CAPTURE);
         if ($responseMatch[1][0] == '301') {
             // 301 means for permanent redirect
-            preg_match('/Location: http(s)?:\/\/(.*)\/api.php/', $http_response_header[6], $redirectMatch, PREG_OFFSET_CAPTURE);
+            preg_match('/Location: http(s)?:\/\/(.*)\/api.php/', $http_response_header[5], $redirectMatch, PREG_OFFSET_CAPTURE);
             array_push($verified, $redirectMatch[2][0]);
             $response['wikisRC'][$redirectMatch[2][0]]['from'] = $wiki;
         } else array_push($verified, $wiki);
@@ -208,12 +200,6 @@ if ($_SESSION['auth']) { // API will be responds for authed users
         // Get metainfo
         $metaResult = meta__($wiki, $UA);
         $response['wikisRC'][$wiki]['siteName'] = json_decode($metaResult)->query->general->sitename;
-
-        // [FANDOM] User's avatar
-        if (endsWith($wiki, '.wikia.com')) $avatar = json_decode(getFANDOMuser__(json_decode($result)->query->recentchanges[0]->user))->items[0]->avatar;
-        else $avatar = null;
-
-        $response['wikisRC'][$wiki]['userAvatar'] = $avatar;
 
         if (json_decode($result)->query->recentchanges[0]->type == 'edit') $response['wikisRC'][$wiki]['diff'] = json_decode($diffResult)->compare;
         else $response['wikisRC'][$wiki]['diff'] = null;
