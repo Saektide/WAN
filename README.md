@@ -1,7 +1,5 @@
 # Tsundoku
 
----
-
 This is the source code of Tsundoku. If you are looking for logging those RC
 requests, you can contact to [the cube](https://dev.wikia.com/User_talk:KockaAdmiralac),
 WAL (WikiaActivityLogger) is not longer working. However, Tsundoku will restrict some
