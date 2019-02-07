@@ -1,3 +1,5 @@
 .vscode/
+web/
 
+/index.php
 *.zip

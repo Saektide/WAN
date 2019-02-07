@@ -8,8 +8,8 @@
 
 const i18n = {
     en: {
-        wanIsRunning: 'WAN is running...',
-        wanIsRunning2: 'WAN still running until you close the tab. We\'ll notify you about recent changes on target wikis.',
+        wanIsRunning: 'Tsundoku is running...',
+        wanIsRunning2: 'Tsundoku still running until you close the tab. We\'ll notify you about recent changes on target wikis.',
         removedWiki: '$1 removed',
         addWiki: 'Add Wiki',
         addWikiDone: 'Added wiki! You can close now this window.',
@@ -21,7 +21,7 @@ const i18n = {
         abuseDetectedBody: 'We are detecting some unusual on your current session. We cleared all for avoid this abuse. Please don\'t do that again.',
         welcome: 'Welcome!',
         redirectingToHTTPS: 'Redirecting to HTTPS site...',
-        aboutWAN: 'About WikiaActivityNotifier',
+        aboutWAN: 'About Tsundoku',
         updates: 'Updates',
         faq: 'FAQ',
         closedWiki: 'Closed wiki',
@@ -34,8 +34,8 @@ const i18n = {
         settings: 'Settings'
     },
     es: {
-        wanIsRunning: 'WAN está ejecutandose...',
-        wanIsRunning2: 'WAN seguirá ejecutandose hasta que cierres la pestaña. Te notificaremos acerca de cambios recientes en los wikis señalados.',
+        wanIsRunning: 'Tsundoku está ejecutandose...',
+        wanIsRunning2: 'Tsundoku seguirá ejecutandose hasta que cierres la pestaña. Te notificaremos acerca de cambios recientes en los wikis señalados.',
         removedWiki: '$1 ha sido eliminado',
         addWiki: 'Añadir wiki',
         addWikiReachedLimit: 'ERROR: Has alcanzado el número máximo de wikis para añadir aquí.',
@@ -47,7 +47,7 @@ const i18n = {
         abuseDetectedBody: 'Estamos detectando algo inusual en tu sesión actual. Hemos limpiado todo para evitar este abuso. Por favor no lo hagas de nuevo.',
         welcome: '¡Bienvenido!',
         redirectingToHTTPS: 'Redirigiendo al sitio HTTPS...',
-        aboutWAN: 'Acerca de WikiaActivityNotifier',
+        aboutWAN: 'Acerca de Tsundoku',
         updates: 'Actualizaciones',
         faq: 'PMF',
         closedWiki: 'Wiki cerrado',

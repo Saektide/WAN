@@ -3,7 +3,7 @@
 include './classes/webstart.php';
 
 /**
- * WAN Frontend
+ * Tsundoku Frontend
  * @author Xaektide Saqriphrx
  * 
  * Main entry for WAN F.E.
