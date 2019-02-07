@@ -14,6 +14,6 @@ So, how can I run Tsundoku on my machine?
 
 # Installation
 
-Tsundoku can be installed with XAMPP (or WAMPP), you can download it [here](https://www.apachefriends.org/download.html).
+Tsundoku can be installed with XAMPP (or WAMP), you can download it [here](https://www.apachefriends.org/download.html).
 You must know, Tsundoku is portable but cannot be copied to another domain. Now,
 if you want to make changes, you must "fork" this repository.
